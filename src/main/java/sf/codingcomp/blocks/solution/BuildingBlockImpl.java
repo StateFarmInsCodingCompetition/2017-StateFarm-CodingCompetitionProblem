@@ -14,7 +14,20 @@ public class BuildingBlockImpl implements BuildingBlock {
     @Override
     public Iterator<BuildingBlock> iterator() {
         // TODO Auto-generated method stub
-    		return this.iterator();
+    		return new Iterator<BuildingBlock>() {
+	    			@Override
+	    			public BuildingBlock next() {
+	    				return (BuildingBlock) below.iterator();
+	    			}
+
+				@Override
+				public boolean hasNext() {
+					if (below != null) {
+						return true;
+					}
+					return false; 
+				}
+    		};
     }
 
     @Override
