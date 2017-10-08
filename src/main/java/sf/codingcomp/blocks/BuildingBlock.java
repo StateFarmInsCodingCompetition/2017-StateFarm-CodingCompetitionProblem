@@ -1,6 +1,9 @@
 package sf.codingcomp.blocks;
 
 
+import sf.codingcomp.blocks.solution.BuildingBlockImpl;
+
+import java.util.List;
 
 /**
  * 
@@ -8,6 +11,12 @@ package sf.codingcomp.blocks;
  * 
  */
 public interface BuildingBlock extends Iterable<BuildingBlock>{
+
+    /**
+     *
+     * @return the stack of blocks, from bottom to top
+     */
+	List<BuildingBlockImpl> getStack();
 	
 	/**
 	 * 
