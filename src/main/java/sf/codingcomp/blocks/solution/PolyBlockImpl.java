@@ -120,5 +120,15 @@ public class PolyBlockImpl implements PolyBlock {
     public PolyBlock copy() {
     	return copyConnections(new HashMap<PolyBlock, PolyBlock>()).get(this);
     }
-
+    
+    @Override
+    public boolean equals(Object other) {
+    	if (!(other instanceof PolyBlockImpl)) {
+    		return false;
+    	}
+    	
+    	PolyBlockImpl block = (PolyBlockImpl) other;
+    	
+    	return this == block;
+    }
 }
