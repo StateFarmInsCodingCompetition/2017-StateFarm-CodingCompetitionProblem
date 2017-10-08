@@ -17,24 +17,6 @@ public class PolyBlockImpl implements PolyBlock {
     public Iterator<PolyBlock> iterator() { // bfs  
         // TODO Auto-generated method stub
     	return new PBIterator(this);
-    	/*
-    	Iterator<PolyBlock> itr = new Iterator<PolyBlock>(){
-
-			@Override
-			public boolean hasNext() {
-				// TODO Auto-generated method stub
-				return false;
-			}
-
-			@Override
-			public PolyBlock next() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-    		
-    	};
-    	
-        return itr;*/
     }
   
 
@@ -118,11 +100,7 @@ public class PolyBlockImpl implements PolyBlock {
 		}
         return hs.size();
     }
-    
-    public void dfs(HashSet hs, PolyBlock pb){
-    	
-    }
-    
+        
     public void copyrec(PolyBlockImpl pos, PolyBlockImpl target, HashMap<PolyBlockImpl, PolyBlockImpl> map) {
     	for (int i=0; i<pos.connected.size(); ++i) {
     		if (map.containsKey(pos.connected.get(i))) {
@@ -143,18 +121,8 @@ public class PolyBlockImpl implements PolyBlock {
     	map.put(this, pbi);
     	copyrec(this, pbi, map);
     	return pbi;
-        // TODO Auto-generated method stub
-    /*	PolyBlockImpl copiedPolyBlock = new PolyBlockImpl();
-    	copiedPolyBlock.iterPos = iterPos;
-    	copiedPolyBlock.connected = new ArrayList<PolyBlock>();
-    	for (PolyBlock pb: connected) {
-    		copiedPolyBlock.connected.add(pb.copy());
-    	}
-    	
-    	//((PolyBlockImpl) copiedPolyBlock).connected = (ArrayList<PolyBlock>) this.connected.clone();
-    	
-        return copiedPolyBlock;
-    */}
+    }
+    
     private boolean testeq(PolyBlockImpl a, PolyBlockImpl b) {
     	long x = (1L<<32)*a.hashCode()+b.hashCode();
     	if (visited.contains(x)) {
@@ -183,6 +151,38 @@ public class PolyBlockImpl implements PolyBlock {
     		}
     	}
     	return true;
-    	//return this.connected.equals(((PolyBlockImpl)other).connected) && iterPos == ((PolyBlockImpl)other).iterPos;
+    }
+    
+    private int recursivelyNumber(PolyBlockImpl node, int number, HashMap<PolyBlockImpl, Integer> map) {
+    	if (map.containsKey(node))
+    		return number;
+    	map.put(node, number++);
+    	for (PolyBlock child: node.connected) {
+    		number = recursivelyNumber((PolyBlockImpl)child, number, map);
+    	}
+    	return number;
+    }
+    
+    public void printGraphStats() {
+    	System.out.printf("This PolyBlock includes a total of %d vertices.\n", size());
+    	System.out.printf("If we number the vertices 1 through %d, we get the following adjacency lists.\n", size());
+    	HashMap<PolyBlockImpl, Integer> numbers = new HashMap<PolyBlockImpl, Integer>();
+    	recursivelyNumber(this, 1, numbers);
+    	PolyBlockImpl arr[] = new PolyBlockImpl[size()];
+    	for (PolyBlockImpl node: numbers.keySet()) {
+    		arr[numbers.get(node)-1] = node;
+    	}
+    	for (int i=0; i<arr.length; ++i) {
+    		System.out.printf("%d: [", i+1);
+    		int y=0;
+    		for (PolyBlock pb: arr[i].connected) {
+    			System.out.printf("%d", numbers.get(((PolyBlockImpl)pb)));
+    			if (++y != arr[i].connected.size()) {
+    				System.out.printf(", ");
+    			} else {
+    				System.out.printf("]\n");
+    			}
+    		}
+    	}
     }
 }

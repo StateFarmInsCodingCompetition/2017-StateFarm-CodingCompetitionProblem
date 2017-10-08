@@ -14,7 +14,6 @@ public class StoragePolyBlockImpl<T> extends PolyBlockImpl implements StoragePol
     public void setValue(T value) {
         // TODO Auto-generated method stub
     	val = value;
-
     }
 
 }
