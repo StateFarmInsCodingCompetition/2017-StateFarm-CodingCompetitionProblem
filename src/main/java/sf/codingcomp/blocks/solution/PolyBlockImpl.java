@@ -9,11 +9,12 @@ import sf.codingcomp.blocks.PolyBlock;
 
 public class PolyBlockImpl implements PolyBlock {   
 	public ArrayList<PolyBlock> connected = new ArrayList<PolyBlock>();
-	public int sizeOfConnections;
+	public int iterPos;
     @Override 
     public Iterator<PolyBlock> iterator() { // bfs  
         // TODO Auto-generated method stub
-    	
+    	return new PBIterator(this);
+    	/*
     	Iterator<PolyBlock> itr = new Iterator<PolyBlock>(){
 
 			@Override
@@ -30,7 +31,7 @@ public class PolyBlockImpl implements PolyBlock {
     		
     	};
     	
-        return itr;
+        return itr;*/
     }
   
 
@@ -120,8 +121,9 @@ public class PolyBlockImpl implements PolyBlock {
         // TODO Auto-generated method stub
     	PolyBlock copiedPolyBlock = new PolyBlockImpl(); 
     	
-    	((PolyBlockImpl) copiedPolyBlock).connected = (ArrayList) this.connected.clone();
-        return null;
+    	((PolyBlockImpl) copiedPolyBlock).connected = (ArrayList<PolyBlock>) this.connected.clone();
+    	
+        return copiedPolyBlock;
     }
 
 }
