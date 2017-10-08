@@ -1,9 +1,41 @@
-Team Names:
+Team Names: Caleb Ji, Sam Heil
 How many JUnits were you able to get to pass?
+BuildingBlockTest: 15/15
+PolyBlockTest: 34/34
+StorageBuildingBlockTest: 19/19
+StoragePolyConnectorTest: 36/36
 
 Document and describe any enhancements included to help the judges properly grade your submission.	
-Step 1:	
-Step 2: 		
+Step 1:	We added a new method to the PolyBlockImpl class called PrintGraphStats, that prints out the number of nodes 
+connected to a given PolyBlock and then prints out an adjacency list representation of the connected component. Here
+is some example output from this method, for a specific graph given in ExtraDemo.java:
+
+"This PolyBlock includes a total of 5 vertices.
+If we number the vertices 1 through 5, we get the following adjacency lists.
+1: [2, 5]
+2: [1, 3, 4]
+3: [2, 4]
+4: [3, 2]
+5: [1]"
+
+You can generate this output by running ExtraDemo.java.
+Step 2: 	We added a new static method to the BuildingBlockImpl class called printConnections, that prints out the 
+stacks of nodes in an ArrayList of BuildingBlocks that are over or under each other. Here is some sample output
+(which can be produced by running ExtraDemo.java):
+
+"Here are the hashCode values of the BuildingBlock objects in the given ArrayList:
+[1550089733, 865113938, 1442407170, 1028566121, 1118140819, 1975012498, 1808253012, 589431969, 1252169911, 2101973421]
+Here are the connections between the BuildingBlocks in the ArrayList (denoted by their hashCode values):
+1550089733 --- null
+865113938 --- 2101973421 --- null
+1975012498 --- 1118140819 --- 1442407170 --- null
+1028566121 --- null
+1808253012 --- 589431969 --- null
+1252169911 --- null
+Here are the number of stacks of each size:
+1: 3
+2: 2
+3: 1"
 
 Feedback for the coding competition?  Things you would like to see in future events?  	
          *You have the option to send feedback to codingcompetition@statefarm.com after the competition if you are running short on time.
