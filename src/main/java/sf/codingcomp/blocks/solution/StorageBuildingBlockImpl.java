@@ -4,16 +4,16 @@ import sf.codingcomp.blocks.StorageBuildingBlock;
 
 public class StorageBuildingBlockImpl<T> extends BuildingBlockImpl implements StorageBuildingBlock<T> {
 
-    @Override
-    public T getValue() {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	T val = null;
 
-    @Override
-    public void setValue(T value) {
-        // TODO Auto-generated method stub
+	@Override
+	public T getValue() {
+		return val;
+	}
 
-    }
+	@Override
+	public void setValue(T value) {
+		this.val = value; 
+	}
 
 }
