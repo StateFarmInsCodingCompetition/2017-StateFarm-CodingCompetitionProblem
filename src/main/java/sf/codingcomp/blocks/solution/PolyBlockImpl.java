@@ -141,7 +141,8 @@ public class PolyBlockImpl implements PolyBlock {
         PolyBlockImpl temp = new PolyBlockImpl(this.id);
         for (PolyBlock conn : connectionSet) {
         		if (alreadyCopied.contains(((PolyBlockImpl) conn).id)) {
-        			temp.connect(conn);
+        			
+        			continue;
         		}
         		alreadyCopied.add(this.id);
         		temp.connect(((PolyBlockImpl) conn).copyHelper(alreadyCopied));
