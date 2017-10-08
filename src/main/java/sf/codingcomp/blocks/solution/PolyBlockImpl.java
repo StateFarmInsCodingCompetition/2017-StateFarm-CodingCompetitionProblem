@@ -15,7 +15,7 @@ public class PolyBlockImpl implements PolyBlock {
 	/**
 	 * The connections to/from this poly block
 	 */
-	private List<PolyBlock> connections = new ArrayList<PolyBlock>();
+	private volatile List<PolyBlock> connections = new ArrayList<PolyBlock>();
 	
 	/**
 	 * Performs the contains method using the '==' comparison operator rather than 'equals()'

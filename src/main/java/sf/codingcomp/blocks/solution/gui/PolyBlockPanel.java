@@ -187,18 +187,30 @@ public class PolyBlockPanel extends JPanel {
 			drawToolBox(g);
 			
 			drawInfoPanel(g);
+			
+			g.setColor(Color.black);
+			g.setFont(TOOLS_CONT);
+			FontMetrics fmm = g.getFontMetrics(TOOLS_CONT);
+			String trrr = "to add blocks";
+			g.drawString(trrr, getWidth() - fmm.stringWidth(trrr), getHeight() / 2 + fmm.getHeight());
+			int wid = fmm.stringWidth(trrr);
+			trrr = "Right click";
+			g.drawString(trrr, getWidth() - fmm.stringWidth(trrr) - (wid - fmm.stringWidth(trrr)) / 2, getHeight() / 2);
 
 			//Draw connections
-			for (StoragePolyBlockImpl<BlockInfo> block : blocks) {
-				BlockInfo inf = block.getValue();
-				
-				g.setColor(Color.black);
-				for (PolyBlock pb : block.getConnections()) {
-					@SuppressWarnings("unchecked")
-					StoragePolyBlockImpl<BlockInfo> conn = (StoragePolyBlockImpl<BlockInfo>)pb;
-					BlockInfo connInf = conn.getValue();
+			synchronized (blocks) {
+				for (StoragePolyBlockImpl<BlockInfo> block : blocks) {
+					BlockInfo inf = block.getValue();
 					
-					g.drawLine(inf.loc.x + BLOCK_SIZE / 2, inf.loc.y + BLOCK_SIZE / 2, connInf.loc.x + BLOCK_SIZE / 2, connInf.loc.y + BLOCK_SIZE / 2);
+					g.setColor(Color.black);
+					List<PolyBlock> conns = block.getConnections();
+					for (PolyBlock pb : conns) {
+						@SuppressWarnings("unchecked")
+						StoragePolyBlockImpl<BlockInfo> conn = (StoragePolyBlockImpl<BlockInfo>)pb;
+						BlockInfo connInf = conn.getValue();
+						
+						g.drawLine(inf.loc.x + BLOCK_SIZE / 2, inf.loc.y + BLOCK_SIZE / 2, connInf.loc.x + BLOCK_SIZE / 2, connInf.loc.y + BLOCK_SIZE / 2);
+					}
 				}
 			}
 			
@@ -232,7 +244,7 @@ public class PolyBlockPanel extends JPanel {
 	
 	private void drawToolBox(Graphics2D g1) {
 		int wid = SIDEBAR_WIDTH;
-		int hei = 150;
+		int hei = 120;
 		
 		Graphics2D g = (Graphics2D) g1.create();
 		
@@ -251,7 +263,7 @@ public class PolyBlockPanel extends JPanel {
 			String str = "Tools";
 			g.drawString(str, (wid - fm.stringWidth(str)) / 2, 30);
 			
-			String[] tools = {"Drag", "Connect", "Disconnect"};
+			String[] tools = {"Drag", "Connect"};
 			int cury = 40;
 			int dy = 30;
 			g.setFont(TOOLS_CONT);
