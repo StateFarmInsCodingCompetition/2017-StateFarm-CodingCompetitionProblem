@@ -69,6 +69,19 @@ public class BuildingBlockImpl implements BuildingBlock {
 
     private class stackingBlocks implements Iterator<BuildingBlock>{
 
+        int cursor = 0;
+
+        ArrayList<BuildingBlock> blocks;
+        public stackingBlocks(){
+            blocks = new ArrayList<>();
+            blocks.add(BuildingBlockImpl.this);
+            BuildingBlock b = findBlockUnder();
+            while (b != null) {
+                blocks.add(b);
+                b = findBlockUnder();
+            }
+        }
+
         @Override
         public boolean hasNext() {
             return false;
@@ -76,7 +89,13 @@ public class BuildingBlockImpl implements BuildingBlock {
 
         @Override
         public BuildingBlock next() {
-            return null;
+            if(cursor == 0){
+                cursor = blocks.size()-1;
+                return blocks.get(cursor);
+            }else{
+                cursor --;
+                return blocks.get(cursor);
+            }
         }
 
         @Override
