@@ -41,8 +41,11 @@ public class BuildingBlockImpl implements BuildingBlock {
             if(bb != null) bb.stackUnder(null);
         }
         else if(findBlockUnder() == null || !findBlockUnder().equals(b)) {
+            BuildingBlock bb = findBlockUnder();
+            if(bb != null) bb.stackUnder(null);
             blockUnder = b;
             b.stackUnder(this);
+
         }
         // TODO Auto-generated method stub
 
@@ -56,6 +59,9 @@ public class BuildingBlockImpl implements BuildingBlock {
             if(bb != null) bb.stackOver(null);
         }
         else if(findBlockOver() == null || !findBlockOver().equals(b)) {
+            BuildingBlock bb = findBlockOver();
+            if(bb != null) bb.stackOver(null);
+
             blockAbove = b;
             b.stackOver(this);
         }
