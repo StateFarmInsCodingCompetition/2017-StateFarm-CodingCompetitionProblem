@@ -1,12 +1,12 @@
 Team Names: Kristofer Hoadley Shawn Hulce
 How many JUnits were you able to get to pass?
 
-BuildingBlockTest			(08/15)
+BuildingBlockTest			(10/15)
 PolyBlockTest				(31/32)
-StorageBuildingBlockTest	(12/19)
+StorageBuildingBlockTest	(14/19)
 StoragePolyConnectorTest	(35/36)
 
-total passed tests:			82
+total passed tests:			84
 
 
 
