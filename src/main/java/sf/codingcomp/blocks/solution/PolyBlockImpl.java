@@ -53,7 +53,7 @@ public class PolyBlockImpl implements PolyBlock {
     @Override
     public int size() {
         // TODO Auto-generated method stub
-        return 1;
+        return connects.size() + 1;
     }
 
     @Override
