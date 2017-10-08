@@ -58,17 +58,17 @@ public class BuildingBlockImpl implements BuildingBlock {
 					next = next.findBlockUnder();
 				}
 				BuildingBlock temp = next;
-				for (int i = 0; i < index; i++) {
+				for (int i = 0; i < index-1; i++) {
 					temp = temp.findBlockOver();
 				}
 				BuildingBlock over = temp.findBlockOver();
 				BuildingBlock under = temp.findBlockUnder();
 				if (over != null) {
-					((BuildingBlockImpl) over).stackOverHelper(under, true);
+					((BuildingBlockImpl) over).stackOverHelper(under, false);
+				} else if (under != null) {
+					((BuildingBlockImpl) under).stackUnderHelper(over, false);
 				}
-				if (under != null) {
-					((BuildingBlockImpl) under).stackUnderHelper(over, true);
-				}
+				index--;
 			}
 
 		};
