@@ -3,17 +3,20 @@ package sf.codingcomp.blocks.solution;
 import sf.codingcomp.blocks.StorageBuildingBlock;
 
 public class StorageBuildingBlockImpl<T> extends BuildingBlockImpl implements StorageBuildingBlock<T> {
-
+	private T value;
+	public StorageBuildingBlockImpl()
+	{
+		value = null;
+	}
+	
     @Override
     public T getValue() {
-        // TODO Auto-generated method stub
-        return null;
+        return value;
     }
 
     @Override
     public void setValue(T value) {
-        // TODO Auto-generated method stub
-
+        this.value = value;
     }
 
 }

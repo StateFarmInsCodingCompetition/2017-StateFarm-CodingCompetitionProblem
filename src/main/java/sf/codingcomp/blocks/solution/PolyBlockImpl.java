@@ -1,51 +1,67 @@
 package sf.codingcomp.blocks.solution;
 
 import java.util.Iterator;
+import java.util.Stack;
 
+import sf.codingcomp.blocks.CircularReferenceException;
 import sf.codingcomp.blocks.PolyBlock;
 
 public class PolyBlockImpl implements PolyBlock {
-
+	private Stack<PolyBlock> blockStack;
+	private int connections;
+	public PolyBlockImpl()
+	{
+		blockStack = new Stack<>();
+		blockStack.push(this);
+		connections = 0;
+	}
+	
+	public PolyBlockImpl(Stack<PolyBlock> blockStack)
+	{
+		this.blockStack = blockStack;
+		this.blockStack.push(this);
+		connections = 0;
+	}
+	
     @Override
     public Iterator<PolyBlock> iterator() {
-        // TODO Auto-generated method stub
-        return null;
+        return blockStack.iterator();
+    }
+    
+    public Stack<PolyBlock> getBlockStack() {
+    	return blockStack;
     }
 
     @Override
     public void connect(PolyBlock aPolyBlock) {
-        // TODO Auto-generated method stub
-
+        blockStack.add((PolyBlockImpl)aPolyBlock);
+        connections++;
     }
 
     @Override
     public void disconnect(PolyBlock aPolyBlock) {
-        // TODO Auto-generated method stub
-
+    	blockStack.remove((PolyBlockImpl)aPolyBlock);
+    	connections--;
     }
 
     @Override
     public boolean contains(PolyBlock aPolyBlock) {
-        // TODO Auto-generated method stub
-        return false;
+    	return blockStack.contains((PolyBlockImpl)aPolyBlock);
     }
-
+    
     @Override
     public int connections() {
-        // TODO Auto-generated method stub
-        return 0;
+    	return connections;
     }
 
     @Override
     public int size() {
-        // TODO Auto-generated method stub
-        return 0;
+        return blockStack.size();
     }
 
     @Override
     public PolyBlock copy() {
-        // TODO Auto-generated method stub
-        return null;
+        return new PolyBlockImpl(blockStack);
     }
 
 }
