@@ -1,14 +1,16 @@
 package sf.codingcomp.blocks.solution;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 import sf.codingcomp.blocks.PolyBlock;
 
 public class PolyBlockImpl implements PolyBlock {
 
-	Set<PolyBlock> connections;
+	public Set<PolyBlock> connections;
 	public boolean isChain = false; 
 
 	public PolyBlockImpl() {
@@ -77,12 +79,22 @@ public class PolyBlockImpl implements PolyBlock {
 	@Override
 	public PolyBlock copy() {
 //		return this; 
+		Map <PolyBlockImpl, PolyBlockImpl> copy = new HashMap <PolyBlockImpl, PolyBlockImpl> (); 
 		
-		PolyBlockImpl _copy = new PolyBlockImpl(); 
-		for(PolyBlock b : connections) {
-			_copy.connect(b);
+		//Creates a map of every existing connected polyblock mapped to the hash of the existing block 
+		for(PolyBlock p : this) {
+			copy.put((PolyBlockImpl) p, new PolyBlockImpl()); 
+		} 
+		
+		//Iterates through polyblocks and their connections to re-create the connections in the copy 
+		for(PolyBlock p : this) {
+			for(PolyBlock q : ( (PolyBlockImpl) p).connections) {
+				copy.get(p).connect(q); 
+			}
 		}
-		return _copy; 
+		
+		//returns copy of this object 
+		return copy.get(this); 
 	}
 
 }

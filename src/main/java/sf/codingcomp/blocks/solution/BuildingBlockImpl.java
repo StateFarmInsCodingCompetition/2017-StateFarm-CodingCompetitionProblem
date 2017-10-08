@@ -3,6 +3,7 @@ package sf.codingcomp.blocks.solution;
 import java.util.Iterator;
 
 import sf.codingcomp.blocks.BuildingBlock;
+import sf.codingcomp.blocks.CircularReferenceException;
 
 public class BuildingBlockImpl implements BuildingBlock {
 
@@ -14,15 +15,19 @@ public class BuildingBlockImpl implements BuildingBlock {
 		this.over = null;
 	}
 
+	/* 
+	 * (non-Javadoc)
+	 * @see java.lang.Iterable#iterator()
+	 */
 	@Override
 	public Iterator<BuildingBlock> iterator() {
 		BuildingBlockImpl firstBlock = new BuildingBlockImpl();
-		firstBlock.stackOver(getFirstBlock(this));
-		
+		firstBlock.over = (BuildingBlockImpl) getFirstBlock(this); 
+
 		return new Iterator<BuildingBlock>() {
 			BuildingBlockImpl currentBlock = firstBlock;
 			boolean callRemoved = false;
-			
+
 			@Override
 			public boolean hasNext() {
 				if (currentBlock.over != null) {
@@ -37,18 +42,25 @@ public class BuildingBlockImpl implements BuildingBlock {
 				callRemoved = false;
 				return currentBlock;
 			}
-			
-			public void remove () {
-				if (callRemoved == false) {
-					currentBlock = currentBlock.over;
-					currentBlock.under.under.stackUnder(currentBlock);
+
+			public void remove() {
+				if (callRemoved == false && currentBlock.under != null) {
+					currentBlock.under.over = currentBlock.over; // Sets the block below ours to reference the block
+																	// above
+					currentBlock.over.under = currentBlock.under; // Sets the block above ours to reference block below
+					BuildingBlockImpl _temp = currentBlock.under; // Sets a temp ref to the under block
+					// Destroys reference on the current block
+					currentBlock.over = null;
+					currentBlock.under = null;
+					currentBlock = _temp; // Sets it finally to ref block above
+					_temp = null; // Destroys the temp
+
 					callRemoved = true;
-				}
-				else {
+				} else {
 					throw new IllegalStateException();
 				}
 			}
-			
+
 		};
 	}
 
@@ -67,6 +79,12 @@ public class BuildingBlockImpl implements BuildingBlock {
 		if (b != null && b.findBlockOver() != this) {
 			_temp.stackUnder(this);
 		}
+
+		if (checkCircUnder()) {
+			this.under = null;
+			_temp.stackUnder(null);
+			throw new CircularReferenceException();
+		}
 	}
 
 	// Puts block over us
@@ -84,6 +102,12 @@ public class BuildingBlockImpl implements BuildingBlock {
 		if (b != null && b.findBlockUnder() != this) {
 			_temp.stackOver(this);
 		}
+
+		if (checkCircOver()) {
+			this.over = null;
+			_temp.stackOver(null);
+			throw new CircularReferenceException();
+		}
 	}
 
 	// Returns block under us
@@ -98,13 +122,35 @@ public class BuildingBlockImpl implements BuildingBlock {
 		return this.over;
 	}
 
-	private BuildingBlock getFirstBlock (BuildingBlock b) {
+	private BuildingBlock getFirstBlock(BuildingBlock b) {
 		BuildingBlock currentBlock = this;
-		
+
 		while (currentBlock.findBlockUnder() != null) {
 			currentBlock = currentBlock.findBlockUnder();
 		}
-		
+
 		return currentBlock;
+	}
+
+	private boolean checkCircOver() {
+		BuildingBlockImpl _temp = this.over;
+		while (_temp != null) {
+			if (_temp.equals(this)) {
+				return true;
+			}
+			_temp = (BuildingBlockImpl) _temp.findBlockOver();
+		}
+		return false;
+	}
+
+	private boolean checkCircUnder() {
+		BuildingBlockImpl _temp = this.under;
+		while (_temp != null) {
+			if (_temp.equals(this)) {
+				return true;
+			}
+			_temp = (BuildingBlockImpl) _temp.findBlockUnder();
+		}
+		return false;
 	}
 }
