@@ -7,6 +7,12 @@ import java.util.List;
 import sf.codingcomp.blocks.BuildingBlock;
 import sf.codingcomp.blocks.CircularReferenceException;
 
+/**
+ * Implementation of {@link BuildingBlock}
+ * 
+ * @author bbece
+ *
+ */
 public class BuildingBlockImpl implements BuildingBlock {
 
 	private BuildingBlock blockUnder;

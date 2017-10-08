@@ -6,6 +6,12 @@ import java.util.List;
 
 import sf.codingcomp.blocks.PolyBlock;
 
+/**
+ * Implementation of {@link PolyBlock}
+ * 
+ * @author bbece
+ *
+ */
 public class PolyBlockImpl implements PolyBlock {
 
 	/**
@@ -58,32 +64,31 @@ public class PolyBlockImpl implements PolyBlock {
 		List<PolyBlock> totalBlocks = retrieveFullList(this);
 		return totalBlocks.size();
 	}
-	
+
 	/**
 	 * Get list of all blocks connected with block passed
 	 */
-	private List<PolyBlock> retrieveFullList(PolyBlock block){
-		List<PolyBlock> totalBlocks = new ArrayList<PolyBlock>();	
+	private List<PolyBlock> retrieveFullList(PolyBlock block) {
+		List<PolyBlock> totalBlocks = new ArrayList<PolyBlock>();
 		totalBlocks.add(block);
 		addBlocksFromConnections(totalBlocks, block);
 		return totalBlocks;
 	}
-	
+
 	/**
 	 * Recursive implementation to get blocks in a graph/network of blocks
 	 */
-	private void addBlocksFromConnections(List<PolyBlock> totalBlocks, PolyBlock polyBlock){
-		for(PolyBlock block : ((PolyBlockImpl) polyBlock).connections){
-			if(!totalBlocks.contains(block)){
+	private void addBlocksFromConnections(List<PolyBlock> totalBlocks, PolyBlock polyBlock) {
+		for (PolyBlock block : ((PolyBlockImpl) polyBlock).connections) {
+			if (!totalBlocks.contains(block)) {
 				totalBlocks.add(block);
 				addBlocksFromConnections(totalBlocks, block);
 			}
 		}
 	}
 
-	
 	@Override
-	public PolyBlock copy(){
+	public PolyBlock copy() {
 		/*
 		 * Rudimentary implementation of deep copy logic
 		 */
