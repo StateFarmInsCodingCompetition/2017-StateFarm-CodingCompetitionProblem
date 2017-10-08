@@ -96,7 +96,7 @@ public class PolyBlockImpl implements PolyBlock {
                     }
                     polyStack.push(interested);
                     visitedPolyBlocks.add(interested);
-                    localItr++;
+                    localItr=0;
                     return interested;
                 }
                 polyStack.pop();
