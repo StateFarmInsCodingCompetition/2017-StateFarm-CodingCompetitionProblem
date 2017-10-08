@@ -1,15 +1,20 @@
 package sf.codingcomp.blocks.solution;
 
+import java.lang.management.PlatformLoggingMXBean;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.function.Consumer;
 
 import sf.codingcomp.blocks.PolyBlock;
 
 public class PolyBlockImpl implements PolyBlock {
 
+    ArrayList<PolyBlock> blocks;
+
     @Override
     public Iterator<PolyBlock> iterator() {
         // TODO Auto-generated method stub
-        return null;
+        return new PBlocks();
     }
 
     @Override
@@ -48,4 +53,26 @@ public class PolyBlockImpl implements PolyBlock {
         return null;
     }
 
+    private class PBlocks implements Iterator<PolyBlock>{
+
+        @Override
+        public boolean hasNext() {
+            return false;
+        }
+
+        @Override
+        public PolyBlock next() {
+            return null;
+        }
+
+        @Override
+        public void remove() {
+
+        }
+
+        @Override
+        public void forEachRemaining(Consumer<? super PolyBlock> action) {
+
+        }
+    }
 }
