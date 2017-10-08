@@ -5,8 +5,7 @@ import java.util.Iterator;
 import sf.codingcomp.blocks.BuildingBlock;
 
 public class BuildingBlockImpl implements BuildingBlock {
-	// Attribute that will hold the block that is under the reference
-	// block(this.obj)
+	// Attribute that will hold the block that is under the reference block(this.obj)
 	private BuildingBlock blockUnder;
 	// Attribute that will hold the block that is over the reference block(this.obj)
 	private BuildingBlock blockOver;
