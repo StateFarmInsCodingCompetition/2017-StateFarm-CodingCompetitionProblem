@@ -17,17 +17,20 @@ public class BuildingBlockImpl implements BuildingBlock {
     		
     		return new Iterator<BuildingBlock>() {
     				BuildingBlockImpl returnBlock = begin;
-    				
+    				int index = -1;
     				boolean removed = false;
 	    			@Override
 	    			public BuildingBlock next() {
-	    				returnBlock = returnBlock.above;
+	    				if (index != -1) {
+	    					returnBlock = returnBlock.above;
+	    				}
+	    				index++;
 	    				return returnBlock;
 	    			}
 
 				@Override
 				public boolean hasNext() {
-					if (returnBlock.above != null) {
+					if (index == -1 || returnBlock.above != null) {
 						return true;
 					}
 					return false; 
