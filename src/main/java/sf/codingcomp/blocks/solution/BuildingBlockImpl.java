@@ -93,8 +93,9 @@ public class BuildingBlockImpl implements BuildingBlock {
 
     public class BuildingBlockIterator implements Iterator<BuildingBlock>{
 
-        BuildingBlock root;
-        BuildingBlock current;
+        private BuildingBlock root;
+        private BuildingBlock current;
+        private boolean removeable;
 
         public BuildingBlockIterator(BuildingBlock root) {
             while(root.findBlockUnder()!=null) root = root.findBlockUnder();
@@ -109,6 +110,7 @@ public class BuildingBlockImpl implements BuildingBlock {
 
         @Override
         public BuildingBlock next() {
+            removeable = true;
             BuildingBlock temp = current;
             this.current = current.findBlockOver();
             return temp;
@@ -116,8 +118,15 @@ public class BuildingBlockImpl implements BuildingBlock {
 
         @Override
         public void remove() {
-            if(Objects.equals(root,current)) throw new IllegalStateException();
+            if(Objects.equals(root,current) || !removeable) throw new IllegalStateException();
 
+            BuildingBlock last = current.findBlockUnder();
+            BuildingBlock scab = last.findBlockUnder();
+            last.stackUnder(null);
+            last.stackOver(null);
+            scab.stackUnder(current);
+
+            removeable = false;
         }
 
     }
