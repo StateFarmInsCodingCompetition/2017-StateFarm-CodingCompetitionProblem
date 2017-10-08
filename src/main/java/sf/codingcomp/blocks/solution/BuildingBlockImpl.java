@@ -33,8 +33,10 @@ public class BuildingBlockImpl implements BuildingBlock {
     		below = b;
     		if(b != null)
     			b.stackUnder(this);
-    		if(temp != null)
+    		if(temp != null){
+    			if(temp.findBlockOver()==this)
     			temp.stackUnder(null);
+    		}
     	}
         
     }
@@ -51,8 +53,10 @@ public class BuildingBlockImpl implements BuildingBlock {
     		above = b;
     		if(b != null)
     			b.stackOver(this);
-    		if(temp != null)
-    			temp.stackOver(null);
+    		if(temp != null){
+    			if(temp.findBlockUnder()==this)
+    				temp.stackOver(null);
+    		}
     	}
         
     }
