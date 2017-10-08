@@ -13,16 +13,18 @@ public class BuildingBlockImpl implements BuildingBlock {
 	
     @Override
     public Iterator<BuildingBlock> iterator() {
-        // TODO Auto-generated method stub
+    		BuildingBlockImpl begin = this;
     		return new Iterator<BuildingBlock>() {
+    				BuildingBlockImpl returnBlock = begin;
 	    			@Override
 	    			public BuildingBlock next() {
-	    				return (BuildingBlock) below.iterator();
+	    				returnBlock = returnBlock.below;
+	    				return returnBlock;
 	    			}
 
 				@Override
 				public boolean hasNext() {
-					if (below != null) {
+					if (returnBlock.below != null) {
 						return true;
 					}
 					return false; 
