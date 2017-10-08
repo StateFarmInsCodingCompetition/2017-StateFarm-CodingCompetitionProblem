@@ -9,7 +9,8 @@ public class PolyBlockImpl implements PolyBlock {
 
     protected Set<PolyBlock> connections = new HashSet<>();
 
-    private AtomicBoolean lock = new AtomicBoolean();
+    private AtomicBoolean connectionLock = new AtomicBoolean();
+    private AtomicBoolean iterationLock = new AtomicBoolean();
 
     @Override
     public void connect(PolyBlock aPolyBlock) {
@@ -17,14 +18,14 @@ public class PolyBlockImpl implements PolyBlock {
             return;
         }
 
-        if (lock.get()) {
+        if (connectionLock.get()) {
             return;
         }
 
         this.connections.add(aPolyBlock);
-        lock.set(true);
+        connectionLock.set(true);
         aPolyBlock.connect(this);
-        lock.set(false);
+        connectionLock.set(false);
     }
 
     @Override
@@ -33,14 +34,14 @@ public class PolyBlockImpl implements PolyBlock {
             return;
         }
 
-        if (lock.get()) {
+        if (connectionLock.get()) {
             return;
         }
 
         this.connections.remove(aPolyBlock);
-        lock.set(true);
+        connectionLock.set(true);
         aPolyBlock.disconnect(this);
-        lock.set(false);
+        connectionLock.set(false);
     }
 
     @Override
@@ -79,7 +80,15 @@ public class PolyBlockImpl implements PolyBlock {
 
     @Override
     public Iterator<PolyBlock> iterator() {
-        return new PolyBlockIterator(this);
+        if(iterationLock.get()){
+            return null;
+        }
+
+        iterationLock.set(true);
+        PolyBlockIterator i = new PolyBlockIterator(this);
+        iterationLock.set(false);
+
+        return i;
     }
 
     @Override
