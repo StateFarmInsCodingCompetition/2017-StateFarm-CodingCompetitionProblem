@@ -3,10 +3,10 @@ package sf.codingcomp.blocks.solution;
 import sf.codingcomp.blocks.StoragePolyBlock;
 
 public class StoragePolyBlockImpl<T> extends PolyBlockImpl implements StoragePolyBlock<T> {
-	T value;
+	private T value;
 	
 	public StoragePolyBlockImpl() {
-		value = null;
+		this.value = null;
 	}
 	
     @Override
@@ -17,8 +17,5 @@ public class StoragePolyBlockImpl<T> extends PolyBlockImpl implements StoragePol
     @Override
     public void setValue(T value) {
     	this.value = value;
-
-
     }
-
 }

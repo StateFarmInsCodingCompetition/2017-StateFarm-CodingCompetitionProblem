@@ -1,6 +1,18 @@
 Team Names:
 How many JUnits were you able to get to pass?
 
+BuildingBlockTest			(08/15)
+PolyBlockTest				(31/32)
+StorageBuildingBlockTest	(12/19)
+StoragePolyConnectorTest	(35/36)
+
+total passed tests:		82
+
+
+
+
+
+
 Document and describe any enhancements included to help the judges properly grade your submission.	
 Step 1:	
 Step 2: 		
