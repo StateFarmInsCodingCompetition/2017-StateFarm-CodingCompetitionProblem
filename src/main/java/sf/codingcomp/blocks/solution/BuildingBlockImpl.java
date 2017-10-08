@@ -22,14 +22,35 @@ public class BuildingBlockImpl implements BuildingBlock {
     @Override
     public void stackOver(BuildingBlock b) {
         // TODO Auto-generated method stub
-    	below = b;
+    	BuildingBlock temp = null;
+    	if(below != null){
+    		temp = below;
+    	}
+    	if(below != b){
+    		below = b;
+    		if(b != null)
+    			b.stackUnder(this);
+    		if(temp != null)
+    			temp.stackUnder(null);
+    	}
         
     }
 
     @Override
     public void stackUnder(BuildingBlock b) {
         // TODO Auto-generated method stub
-    	above = b;
+    	BuildingBlock temp = null;
+    	if(above != null){
+    		temp = above;
+    	}
+    	
+    	if(above != b){
+    		above = b;
+    		if(b != null)
+    			b.stackOver(this);
+    		if(temp != null)
+    			temp.stackOver(null);
+    	}
         
     }
 
