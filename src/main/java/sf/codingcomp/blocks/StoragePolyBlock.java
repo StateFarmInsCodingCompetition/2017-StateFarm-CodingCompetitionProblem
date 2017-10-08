@@ -3,11 +3,11 @@ package sf.codingcomp.blocks;
 
 /**
  * Like a PolyBlock, except that it also manages a value.
- *
  */
-public interface StoragePolyBlock<T> extends PolyBlock {
-	
-	T getValue();
+public interface StoragePolyBlock<T>
+  extends PolyBlock {
 
-	void setValue(T value);
+  T getValue();
+
+  void setValue( T value );
 }
