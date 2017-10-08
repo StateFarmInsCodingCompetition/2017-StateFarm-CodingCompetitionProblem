@@ -1,10 +1,13 @@
 package sf.codingcomp.blocks.solution;
 
 import java.util.Iterator;
+import java.util.List;
 
 import sf.codingcomp.blocks.PolyBlock;
 
 public class PolyBlockImpl implements PolyBlock {
+	
+	private List<PolyBlock> connections;
 
     @Override
     public Iterator<PolyBlock> iterator() {
@@ -14,8 +17,7 @@ public class PolyBlockImpl implements PolyBlock {
 
     @Override
     public void connect(PolyBlock aPolyBlock) {
-        // TODO Auto-generated method stub
-
+        connections.add(aPolyBlock);
     }
 
     @Override
@@ -32,8 +34,7 @@ public class PolyBlockImpl implements PolyBlock {
 
     @Override
     public int connections() {
-        // TODO Auto-generated method stub
-        return 0;
+        return this.connections.size();
     }
 
     @Override
