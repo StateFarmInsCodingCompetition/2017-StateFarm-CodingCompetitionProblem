@@ -16,7 +16,38 @@ public class BuildingBlockImpl implements BuildingBlock {
 
 	@Override
 	public Iterator<BuildingBlock> iterator() {
-		return new Iterator<BuildingBlock> {
+		BuildingBlockImpl firstBlock = new BuildingBlockImpl();
+		firstBlock.stackOver(getFirstBlock(this));
+		
+		return new Iterator<BuildingBlock>() {
+			BuildingBlockImpl currentBlock = firstBlock;
+			boolean callRemoved = false;
+			
+			@Override
+			public boolean hasNext() {
+				if (currentBlock.over != null) {
+					return true;
+				}
+				return false;
+			}
+
+			@Override
+			public BuildingBlock next() {
+				currentBlock = currentBlock.over;
+				callRemoved = false;
+				return currentBlock;
+			}
+			
+			public void remove () {
+				if (callRemoved == false) {
+					currentBlock = currentBlock.over;
+					currentBlock.under.under.stackUnder(currentBlock);
+					callRemoved = true;
+				}
+				else {
+					throw new IllegalStateException();
+				}
+			}
 			
 		};
 	}
@@ -67,4 +98,13 @@ public class BuildingBlockImpl implements BuildingBlock {
 		return this.over;
 	}
 
+	private BuildingBlock getFirstBlock (BuildingBlock b) {
+		BuildingBlock currentBlock = this;
+		
+		while (currentBlock.findBlockUnder() != null) {
+			currentBlock = currentBlock.findBlockUnder();
+		}
+		
+		return currentBlock;
+	}
 }
