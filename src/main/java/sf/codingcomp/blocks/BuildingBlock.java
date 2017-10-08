@@ -20,6 +20,18 @@ public interface BuildingBlock extends Iterable<BuildingBlock>{
 	 * @param b	puts this object under the passed object
 	 */
 	void stackUnder(BuildingBlock b);
+	
+	/**
+	 * 
+	 * @param b	sets this block's "blockOver" attribute.
+	 */
+	void blockOverSetter(BuildingBlock b);
+	
+	/**
+	 * 
+	 * @param b	sets this block's "blockUnder" attribute.
+	 */
+	void blockUnderSetter(BuildingBlock b);
 
 	/**
 	 * 
@@ -32,5 +44,5 @@ public interface BuildingBlock extends Iterable<BuildingBlock>{
 	 * @return	the <code>BuildingBlock</code> over the current one
 	 */
 	BuildingBlock findBlockOver();
-	
+
 }
