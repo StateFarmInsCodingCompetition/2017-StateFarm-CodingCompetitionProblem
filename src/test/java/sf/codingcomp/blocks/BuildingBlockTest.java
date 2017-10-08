@@ -127,7 +127,7 @@ public class BuildingBlockTest {
         getBlock1().stackOver(getBlock2());
         getBlock2().stackOver(getBlock3());
         getBlock3().stackOver(getBlock4());
-
+//change
         Iterator<BuildingBlock> it = getBlock3().iterator();
         BuildingBlock b = it.next();
         assertSame(getBlock4(), b);

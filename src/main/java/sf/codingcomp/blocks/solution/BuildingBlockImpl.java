@@ -6,6 +6,7 @@ import sf.codingcomp.blocks.BuildingBlock;
 
 public class BuildingBlockImpl implements BuildingBlock {
 
+
     @Override
     public Iterator<BuildingBlock> iterator() {
         // TODO Auto-generated method stub
