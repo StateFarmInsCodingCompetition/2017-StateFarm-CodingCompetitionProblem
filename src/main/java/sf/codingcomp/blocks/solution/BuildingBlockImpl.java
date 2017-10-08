@@ -72,13 +72,19 @@ public class BuildingBlockImpl implements BuildingBlock {
         int cursor = 0;
 
         ArrayList<BuildingBlock> blocks;
+
         public stackingBlocks(){
             blocks = new ArrayList<>();
             blocks.add(BuildingBlockImpl.this);
             BuildingBlock b = findBlockUnder();
             while (b != null) {
                 blocks.add(b);
-                b = findBlockUnder();
+                b = b.findBlockUnder();
+            }
+            b = findBlockOver();
+            while (b != null) {
+                blocks.add(0, b);
+                b = b.findBlockOver();
             }
         }
 
@@ -100,7 +106,11 @@ public class BuildingBlockImpl implements BuildingBlock {
 
         @Override
         public void remove() {
-
+            BuildingBlock b = blocks.get(cursor);
+            BuildingBlock bAbove = b.findBlockOver();
+            BuildingBlock bUnder = b.findBlockUnder();
+            bAbove.stackOver(bUnder);
+            bUnder.stackUnder(bAbove);
         }
 
         @Override
