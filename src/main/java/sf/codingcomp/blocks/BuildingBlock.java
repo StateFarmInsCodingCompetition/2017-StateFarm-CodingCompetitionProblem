@@ -33,4 +33,8 @@ public interface BuildingBlock extends Iterable<BuildingBlock>{
 	 */
 	BuildingBlock findBlockOver();
 	
+	void setBlockOver(BuildingBlock b);
+	
+	void setBlockUnder(BuildingBlock b);
+	
 }
