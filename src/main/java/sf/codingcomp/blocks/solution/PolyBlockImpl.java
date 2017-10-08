@@ -1,50 +1,80 @@
 package sf.codingcomp.blocks.solution;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Stack;
 
+import sf.codingcomp.blocks.BuildingBlock;
 import sf.codingcomp.blocks.CircularReferenceException;
 import sf.codingcomp.blocks.PolyBlock;
 
 public class PolyBlockImpl implements PolyBlock {
-	
+	static int counter = 0;
+	private int id;
 	HashSet<PolyBlock> connectionSet = new HashSet<>();
 	
-    @Override
-    public Iterator<PolyBlock> iterator() {   	
-	    	Iterator<PolyBlock> it = new Iterator<PolyBlock>() {
-	            private int currentIndex = 0;
-	            	Iterator<PolyBlock> connectionIter = connectionSet.iterator();
-	            	private HashSet<PolyBlock> visited = new HashSet<>();
-		        private Stack<PolyBlock> traversed = new Stack<>();
-		        PolyBlockImpl.this.getClass().sizeHelper(visited, PolyStackImpl.this, traversed);
-		        
-	            @Override
-	            public boolean hasNext() {
-	            		if (currentIndex == 0) return true;
-	            		else {
-	            			return connectionIter.hasNext();
-	            		}
-	            }
+	public PolyBlockImpl() {
+		id = counter++;
+	}
 	
-	            @Override
-	            public PolyBlock next() {
-	            		if (currentIndex == 0) {
-	            			currentIndex++;
-	            			return PolyBlockImpl.this;
-	            		} else {
-	            			currentIndex++;
-	            			return connectionIter.next();
-	            		}
-	            }
+	public PolyBlockImpl(int id) {
+		this.id = id;
+	}
 	
-	            @Override
-	            public void remove() {
-	                throw new UnsupportedOperationException();
-	            }
-	    	};    
-	    return it;
+	public int getId() {
+		return id;
+	}
+	
+	
+	
+	@Override
+    public Iterator<PolyBlock> iterator() {
+        // TODO Auto-generated method stub
+        return new PolyBlockIterator();
+    }
+
+    public class PolyBlockIterator implements Iterator<PolyBlock> {   	
+        	//Iterator<PolyBlock> connectionIter = connectionSet.iterator();
+        	private HashSet<PolyBlock> visited = new HashSet<>();
+        private Stack<PolyBlock> traversed = new Stack<>();
+        
+        //PolyBlockImpl.this.getClass().sizeHelper(visited, PolyStackImpl.this, traversed);
+        
+        public PolyBlockIterator() {
+        		traversed.push(PolyBlockImpl.this);
+        }
+        
+        @Override
+        public boolean hasNext() {
+        		if (traversed.isEmpty()) return false;
+        		else return true;
+        }
+
+        @Override
+        public PolyBlock next() {
+        		if (hasNext()) {
+        			PolyBlock curBlock = traversed.pop();
+        			visited.add(curBlock);
+        			PolyBlockImpl curBlockImpl = (PolyBlockImpl) curBlock;
+        			for (PolyBlock pb : curBlockImpl.connectionSet) {
+        				if (!visited.contains(pb) && !traversed.contains(pb)) {
+        					traversed.push(pb);
+        				}
+        			}
+        			return curBlock;
+        		} else {
+        			throw new NoSuchElementException();
+        		}
+        		
+        		
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }   
     }
 
     @Override
@@ -98,12 +128,39 @@ public class PolyBlockImpl implements PolyBlock {
 
     @Override
     public PolyBlock copy() {
-//        PolyBlockImpl temp = new PolyBlockImpl();
-//        for (PolyBlock conn : connectionSet) {
-//        		temp.connectionSet.add(conn);
-//        }
-//        return temp;
-    		return this;
+    		HashSet<Integer> alreadyCopied = new HashSet<>();
+        PolyBlockImpl temp = new PolyBlockImpl(this.id);
+        alreadyCopied.add(this.id);
+        for (PolyBlock conn : connectionSet) {
+        		temp.connect(((PolyBlockImpl) conn).copyHelper(alreadyCopied));
+        }
+        return temp;
+    }
+    
+    public PolyBlock copyHelper(HashSet<Integer> alreadyCopied) {
+        PolyBlockImpl temp = new PolyBlockImpl(this.id);
+        for (PolyBlock conn : connectionSet) {
+        		if (alreadyCopied.contains(((PolyBlockImpl) conn).id)) {
+        			temp.connect(conn);
+        		}
+        		alreadyCopied.add(this.id);
+        		temp.connect(((PolyBlockImpl) conn).copyHelper(alreadyCopied));
+        }
+        return temp;
+    }
+    
+    @Override
+    public boolean equals(Object toCompare) {
+    		if (this == toCompare) {
+    			return true;
+    		} else if (toCompare == null) {
+    			return false;
+    		} else if (!(toCompare instanceof PolyBlockImpl)) {
+    			return false;
+    		} else {
+    			PolyBlockImpl newBlock = (PolyBlockImpl) toCompare;
+    			return this.connectionSet.equals(newBlock.connectionSet) && this.id == newBlock.id;
+    		}
     }
 
 }
