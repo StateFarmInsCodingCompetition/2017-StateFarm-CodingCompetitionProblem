@@ -1,6 +1,7 @@
 package sf.codingcomp.blocks.solution;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -11,6 +12,15 @@ import sf.codingcomp.blocks.PolyBlock;
 public class PolyBlockImpl implements PolyBlock {
 
 	private List<PolyBlock> connections = new ArrayList<PolyBlock>();
+	
+	private static boolean surfaceContains(List<PolyBlock> blocks, PolyBlock block) {
+		for (PolyBlock blk : blocks) {
+			if (blk == block) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	/**
 	 * Recursively finds all blocks connected to this block and neighbors 
@@ -23,7 +33,7 @@ public class PolyBlockImpl implements PolyBlock {
 		
 		//Call getAllBlocks on all neighbors that are not already added to the list
 		for (PolyBlock block : connections) {
-			if (!currentBlocks.contains(block)) {
+			if (!surfaceContains(currentBlocks, block)) {
 				((PolyBlockImpl)block).getAllBlocks(currentBlocks);
 			}
 		}
@@ -38,7 +48,7 @@ public class PolyBlockImpl implements PolyBlock {
 		oldToNew.put(this, myClone);
 		
 		for (PolyBlock block : connections) {
-			if (!oldToNew.containsKey(block)) {
+			if (!surfaceContains(new ArrayList<PolyBlock>(oldToNew.keySet()), block)) {
 				((PolyBlockImpl)block).copyConnections(oldToNew);
 			}
 			
@@ -82,7 +92,7 @@ public class PolyBlockImpl implements PolyBlock {
     	}
     	
     	//Add connection to this block and to the newly connected block if not already connected
-        if (!connections.contains(aPolyBlock)) {
+        if (!contains(aPolyBlock)) {
         	connections.add(aPolyBlock);
         	((PolyBlockImpl)aPolyBlock).connections.add(this);
         }
@@ -102,7 +112,7 @@ public class PolyBlockImpl implements PolyBlock {
 
     @Override
     public boolean contains(PolyBlock aPolyBlock) {
-        return connections.contains(aPolyBlock);
+        return surfaceContains(connections, aPolyBlock);
     }
 
     @Override
@@ -129,6 +139,29 @@ public class PolyBlockImpl implements PolyBlock {
     	
     	PolyBlockImpl block = (PolyBlockImpl) other;
     	
-    	return this == block;
+    	List<PolyBlock> graphA = getAllBlocks(new ArrayList<PolyBlock>());
+    	List<PolyBlock> graphB = block.getAllBlocks(new ArrayList<PolyBlock>());
+    	
+    	if (graphA.size() != graphB.size()) {
+    		return false;
+    	}
+    	
+    	int[] numA = new int[graphA.size()];
+    	int[] numB = new int[graphB.size()];
+    	for (int i = 0; i < graphA.size(); i++) {
+    		numA[i] = ((PolyBlockImpl)graphA.get(i)).connections();
+    		numB[i] = ((PolyBlockImpl)graphB.get(i)).connections();
+    	}
+    	
+    	Arrays.sort(numA);
+    	Arrays.sort(numB);
+    	
+    	for (int i = 0; i < numA.length; i++) {
+    		if (numA[i] != numB[i]) {
+    			return false;
+    		}
+    	}
+    	
+    	return true;
     }
 }
