@@ -38,6 +38,11 @@ public class PolyBlockImpl implements PolyBlock {
     @Override
     public void connect(PolyBlock aPolyBlock) {
         // TODO Auto-generated method stub
+    	for (PolyBlock x: this.connected) {
+    		if (x == aPolyBlock) {
+    			return;
+    		}
+    	}
     	if(!this.equals(aPolyBlock) && aPolyBlock != null){
     		this.connected.add(aPolyBlock);
         	((PolyBlockImpl) aPolyBlock).connected.add(this);
@@ -53,8 +58,7 @@ public class PolyBlockImpl implements PolyBlock {
 	    		if(itr.next().equals(aPolyBlock)){
 	    			itr.remove();
 	    		}
-	    	}
-	    	
+	    	}	    	
 	    	Iterator itr1 = ((PolyBlockImpl) aPolyBlock).connected.iterator();
 	    	while(itr1.hasNext()){
 	    		if(itr1.next().equals(this)){
