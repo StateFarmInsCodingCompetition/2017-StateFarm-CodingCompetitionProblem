@@ -6,7 +6,7 @@ PolyBlockTest				(31/32)
 StorageBuildingBlockTest	(12/19)
 StoragePolyConnectorTest	(35/36)
 
-total passed tests:		82
+total passed tests:			82
 
 
 
