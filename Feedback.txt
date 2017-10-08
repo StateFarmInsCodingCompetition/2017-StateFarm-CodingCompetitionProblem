@@ -1,5 +1,6 @@
-Team Names:
+Team Names: Jingbo Wang
 How many JUnits were you able to get to pass?
+1
 
 Document and describe any enhancements included to help the judges properly grade your submission.	
 Step 1:	
