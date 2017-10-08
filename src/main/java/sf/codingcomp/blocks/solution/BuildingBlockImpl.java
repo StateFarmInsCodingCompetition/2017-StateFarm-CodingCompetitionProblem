@@ -14,23 +14,20 @@ public class BuildingBlockImpl implements BuildingBlock {
     @Override
     public Iterator<BuildingBlock> iterator() {
     		BuildingBlockImpl begin = this;
-    		while (begin.above != null) {
-			begin = begin.above;
-		}
-    		BuildingBlockImpl test = begin;
+    		
     		return new Iterator<BuildingBlock>() {
-    				BuildingBlockImpl returnBlock = test;
+    				BuildingBlockImpl returnBlock = begin;
     				
     				boolean removed = false;
 	    			@Override
 	    			public BuildingBlock next() {
-	    				returnBlock = returnBlock.below;
+	    				returnBlock = returnBlock.above;
 	    				return returnBlock;
 	    			}
 
 				@Override
 				public boolean hasNext() {
-					if (returnBlock != null) {
+					if (returnBlock.above != null) {
 						return true;
 					}
 					return false; 
