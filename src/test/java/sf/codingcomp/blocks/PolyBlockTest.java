@@ -18,7 +18,7 @@ import sf.codingcomp.blocks.solution.PolyBlockImpl;
 
 public class PolyBlockTest {
 
-    private PolyBlock block1;
+    private PolyBlock block1; 
     private PolyBlock block2;
     private PolyBlock block3;
     private PolyBlock block4;
