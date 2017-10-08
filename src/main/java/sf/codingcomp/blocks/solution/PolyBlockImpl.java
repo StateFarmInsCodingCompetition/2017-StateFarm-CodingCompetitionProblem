@@ -41,7 +41,11 @@ public class PolyBlockImpl implements PolyBlock {
 
     @Override
     public int size() {
-    return directConnections.size()+1;
+        int count = 0;
+        for (PolyBlock polyBlock : this) {
+            count++;
+        }
+        return count;
     }
 
     @Override
@@ -83,6 +87,7 @@ public class PolyBlockImpl implements PolyBlock {
             while(polyStack.size()>0){
                 PolyBlock topBlock = polyStack.peek();
                 List<PolyBlock> children = topBlock.getDirectConnections();
+
                 while (localItr<children.size()){
                     PolyBlock interested = children.get(localItr);
                     if(visitedPolyBlocks.contains(interested)) {
