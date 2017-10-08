@@ -40,15 +40,15 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.5</version>
-        </dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.5</version>
+		</dependency>
 		<dependency>
-            <groupId>org.javamoney</groupId>
-            <artifactId>moneta</artifactId>
-            <version>0.9</version>
-        </dependency>
+			<groupId>org.javamoney</groupId>
+			<artifactId>moneta</artifactId>
+			<version>0.9</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -64,5 +64,5 @@
 			</plugin>
 		</plugins>
 	</build>
-
+	<properties><stallman>SSdkIGp1c3QgbGlrZSB0byBpbnRlcmplY3QgZm9yIG1vbWVudC4gV2hhdCB5b3UncmUgcmVmZXJpbmcgdG8gYXMgTGludXgsIGlzIGluIGZhY3QsIEdOVS9MaW51eCwgb3IgYXMgSSd2ZSByZWNlbnRseSB0YWtlbiB0byBjYWxsaW5nIGl0LCBHTlUgcGx1cyBMaW51eC4gTGludXggaXMgbm90IGFuIG9wZXJhdGluZyBzeXN0ZW0gdW50byBpdHNlbGYsIGJ1dCByYXRoZXIgYW5vdGhlciBmcmVlIGNvbXBvbmVudCBvZiBhIGZ1bGx5IGZ1bmN0aW9uaW5nIEdOVSBzeXN0ZW0gbWFkZSB1c2VmdWwgYnkgdGhlIEdOVSBjb3JlbGlicywgc2hlbGwgdXRpbGl0aWVzIGFuZCB2aXRhbCBzeXN0ZW0gY29tcG9uZW50cyBjb21wcmlzaW5nIGEgZnVsbCBPUyBhcyBkZWZpbmVkIGJ5IFBPU0lYLiBNYW55IGNvbXB1dGVyIHVzZXJzIHJ1biBhIG1vZGlmaWVkIHZlcnNpb24gb2YgdGhlIEdOVSBzeXN0ZW0gZXZlcnkgZGF5LCB3aXRob3V0IHJlYWxpemluZyBpdC4gVGhyb3VnaCBhIHBlY3VsaWFyIHR1cm4gb2YgZXZlbnRzLCB0aGUgdmVyc2lvbiBvZiBHTlUgd2hpY2ggaXMgd2lkZWx5IHVzZWQgdG9kYXkgaXMgb2Z0ZW4gY2FsbGVkIExpbnV4LCBhbmQgbWFueSBvZiBpdHMgdXNlcnMgYXJlIG5vdCBhd2FyZSB0aGF0IGl0IGlzIGJhc2ljYWxseSB0aGUgR05VIHN5c3RlbSwgZGV2ZWxvcGVkIGJ5IHRoZSBHTlUgUHJvamVjdC4gVGhlcmUgcmVhbGx5IGlzIGEgTGludXgsIGFuZCB0aGVzZSBwZW9wbGUgYXJlIHVzaW5nIGl0LCBidXQgaXQgaXMganVzdCBhIHBhcnQgb2YgdGhlIHN5c3RlbSB0aGV5IHVzZS4gTGludXggaXMgdGhlIGtlcm5lbDogdGhlIHByb2dyYW0gaW4gdGhlIHN5c3RlbSB0aGF0IGFsbG9jYXRlcyB0aGUgbWFjaGluZSdzIHJlc291cmNlcyB0byB0aGUgb3RoZXIgcHJvZ3JhbXMgdGhhdCB5b3UgcnVuLiBUaGUga2VybmVsIGlzIGFuIGVzc2VudGlhbCBwYXJ0IG9mIGFuIG9wZXJhdGluZyBzeXN0ZW0sIGJ1dCB1c2VsZXNzIGJ5IGl0c2VsZjsgaXQgY2FuIG9ubHkgZnVuY3Rpb24gaW4gdGhlIGNvbnRleHQgb2YgYSBjb21wbGV0ZSBvcGVyYXRpbmcgc3lzdGVtLiBMaW51eCBpcyBub3JtYWxseSB1c2VkIGluIGNvbWJpbmF0aW9uIHdpdGggdGhlIEdOVSBvcGVyYXRpbmcgc3lzdGVtOiB0aGUgd2hvbGUgc3lzdGVtIGlzIGJhc2ljYWxseSBHTlUgd2l0aCBMaW51eCBhZGRlZCwgb3IgR05VL0xpbnV4LiBBbGwgdGhlIHNvLWNhbGxlZCBMaW51eCBkaXN0cmlidXRpb25zIGFyZSByZWFsbHkgZGlzdHJpYnV0aW9ucyBvZiBHTlUvTGludXgh</stallman></properties>
 </project>
