@@ -72,7 +72,32 @@ public class PolyBlockImpl implements PolyBlock {
     @Override
     public PolyBlock copy() {
         // TODO Auto-generated method stub
-        return null;
+        PolyBlock p = new PolyBlockImpl();
+        Set<PolyBlock> contained = new HashSet<>();
+        for (PolyBlock p1 : connectedPolyblocks) {
+            if (((PolyBlockImpl) p).connectedPolyblocks.size() > 1) {
+                if (!contained.contains(p1) && p != null) {
+                    p.connect(p1.copy());
+                }
+            } else {
+                if (!contained.contains(p1) && p != null) {
+                    p.connect(p1);
+                }
+            }
+
+        }
+        return p;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj.getClass() == this.getClass()) {
+            if (((PolyBlockImpl) obj).connectedPolyblocks
+                    .equals(connectedPolyblocks)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
