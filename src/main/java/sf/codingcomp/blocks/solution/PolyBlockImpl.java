@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 import sf.codingcomp.blocks.PolyBlock;
 
-public class PolyBlockImpl implements PolyBlock {  
+public class PolyBlockImpl implements PolyBlock {   
 	public ArrayList<PolyBlock> connected = new ArrayList<PolyBlock>();
     @Override
     public Iterator<PolyBlock> iterator() { // bfs
