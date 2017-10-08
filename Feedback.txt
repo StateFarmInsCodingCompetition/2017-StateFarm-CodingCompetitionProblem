@@ -1,8 +1,10 @@
-Team Names:
+Team Names: Karan Achtani & Kar Shin Lin
 How many JUnits were you able to get to pass?
+103
 
 Document and describe any enhancements included to help the judges properly grade your submission.	
-Step 1:	
+Step 1:	There is a package sf.codingcomp.blocks.GUI what contains Main.java. This class is the start of a GUI that allows users to stack StorageBuildingBlocks.
+		The GUI currently allows users to input a value for the block, whether to stack over or under another block, and also which block to stack over/under. 
 Step 2: 		
 
 Feedback for the coding competition?  Things you would like to see in future events?  	

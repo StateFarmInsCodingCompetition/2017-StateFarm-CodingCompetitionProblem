@@ -1,6 +1,6 @@
 package sf.codingcomp.blocks;
 
-
+import sf.codingcomp.blocks.solution.BuildingBlockImpl;
 
 /**
  * 
@@ -8,6 +8,8 @@ package sf.codingcomp.blocks;
  * 
  */
 public interface BuildingBlock extends Iterable<BuildingBlock>{
+	
+	
 	
 	/**
 	 * 
@@ -32,5 +34,7 @@ public interface BuildingBlock extends Iterable<BuildingBlock>{
 	 * @return	the <code>BuildingBlock</code> over the current one
 	 */
 	BuildingBlock findBlockOver();
+
+	
 	
 }

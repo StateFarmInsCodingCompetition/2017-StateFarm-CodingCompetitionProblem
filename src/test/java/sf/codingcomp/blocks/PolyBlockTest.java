@@ -500,7 +500,7 @@ public class PolyBlockTest {
         getBlock1().connect(getBlock3());
         getBlock1().connect(getBlock4());
         getBlock1().connect(getBlock5());
-
+        
         assertEquals(5, getBlock1().size());
         assertEquals(5, getBlock2().size());
         assertEquals(5, getBlock3().size());
