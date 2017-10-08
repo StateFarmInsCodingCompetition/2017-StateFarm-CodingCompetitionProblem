@@ -21,10 +21,16 @@ public class BuildingBlockImpl implements BuildingBlock {
     		if (this.findBlockUnder() == b) {
 			return;
 		}
-//    		if (b == null) {
-//    			below = null;
-//    			return;
-//    		}
+    		if (b == null) {
+    			if (below != null) {
+    				BuildingBlock temp = below;
+    				below = null;
+    				temp.stackUnder(null);
+    				return;
+    			}
+    			below = null;
+    			return;
+    		}
     		if (this.findBlockUnder() != null) {
     			this.findBlockUnder().stackUnder(null);
     		}
@@ -41,6 +47,12 @@ public class BuildingBlockImpl implements BuildingBlock {
     			return;
     		}
     		if (b == null) {
+    			if (above != null) {
+    				BuildingBlock temp = above;
+    				above = null;
+    				temp.stackOver(null);
+    				return;
+    			}
     			above = null;
     			return;
     		}
