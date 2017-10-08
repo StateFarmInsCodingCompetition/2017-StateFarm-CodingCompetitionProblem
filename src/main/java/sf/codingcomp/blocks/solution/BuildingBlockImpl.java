@@ -1,5 +1,6 @@
 package sf.codingcomp.blocks.solution;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Stack;
 
@@ -39,7 +40,7 @@ public class BuildingBlockImpl implements BuildingBlock {
     }
 
     @Override
-    public void stackUnder(BuildingBlock b) {
+    public void stackUnder(BuildingBlock b) throws CircularReferenceException {
         if (b.findBlockUnder() == null)
     	{
         	// Create a new, blank stack, and
@@ -87,5 +88,4 @@ public class BuildingBlockImpl implements BuildingBlock {
         else
         	return getBlockStack().get(index + 1);
     }
-
 }

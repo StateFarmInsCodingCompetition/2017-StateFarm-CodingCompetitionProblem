@@ -33,20 +33,20 @@ public class PolyBlockImpl implements PolyBlock {
     }
 
     @Override
-    public void connect(PolyBlock aPolyBlock) throws CircularReferenceException {
-        blockStack.add(aPolyBlock);
+    public void connect(PolyBlock aPolyBlock) {
+        blockStack.add((PolyBlockImpl)aPolyBlock);
         connections++;
     }
 
     @Override
     public void disconnect(PolyBlock aPolyBlock) {
-    	blockStack.remove(aPolyBlock);
+    	blockStack.remove((PolyBlockImpl)aPolyBlock);
     	connections--;
     }
 
     @Override
     public boolean contains(PolyBlock aPolyBlock) {
-    	return blockStack.contains(aPolyBlock);
+    	return blockStack.contains((PolyBlockImpl)aPolyBlock);
     }
     
     @Override
