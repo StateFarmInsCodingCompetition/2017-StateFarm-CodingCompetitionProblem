@@ -17,18 +17,7 @@ public class BuildingBlockImpl implements BuildingBlock {
 	
     @Override
     public Iterator<BuildingBlock> iterator() {
-        List blockList = Collections.synchronizedList(new ArrayList());
-        BuildingBlock tmp = this;
-        while (tmp.findBlockOver() != null) { 
-        	tmp = tmp.findBlockOver();
-        }
-        while (tmp.findBlockOver() != null) { 
-        	blockList.add(tmp);
-        	tmp = tmp.findBlockOver();
-        }
-        blockList.add(tmp);
-        
-        Iterator itr = blockList.iterator();
+        Iterator itr = new BuildingBlockIterator(this);
         return itr;
     }
 
@@ -46,11 +35,15 @@ public class BuildingBlockImpl implements BuildingBlock {
     			blockSittingOver.stackUnder(blockSittingUnder);
     		}
     	}
-    	if (b.findBlockUnder() == this.findBlockOver() && this.findBlockOver() != null) { 
-    		throw new CircularReferenceException();
+    	if (b != null) { 
+    		if (b.findBlockUnder() == this.findBlockOver() && this.findBlockOver() != null) { 
+    			throw new CircularReferenceException();
+    		}
     	}
     	blockSittingOver = b;
-    	b.stackUnder(this);
+    	if (b != null) { 
+    		b.stackUnder(this);
+    	}
     }
 
     //Puts this under object passed
@@ -67,12 +60,15 @@ public class BuildingBlockImpl implements BuildingBlock {
     			blockSittingUnder.stackOver(blockSittingOver);
     		}
     	}
-    	if (b.findBlockOver() == this.findBlockUnder() && this.findBlockUnder() != null) { 
-    		throw new CircularReferenceException();
+    	if (b != null) { 
+    		if (b.findBlockOver() == this.findBlockUnder() && this.findBlockUnder() != null) { 
+    			throw new CircularReferenceException();
+    		}
     	}
     	blockSittingUnder = b;
-    	b.stackOver(this);
-    	 
+    	if (b != null) { 
+    		b.stackOver(this);
+    	}
     }
 
     
@@ -88,4 +84,41 @@ public class BuildingBlockImpl implements BuildingBlock {
         return blockSittingUnder;
     }
 
+}
+
+class BuildingBlockIterator implements Iterator {
+	
+	private BuildingBlock current = null;
+	
+	BuildingBlockIterator(BuildingBlock b) { 
+		BuildingBlock tmp = b;
+		while (tmp.findBlockUnder() != null)
+			tmp = tmp.findBlockUnder();
+		current = tmp;
+	}
+
+	@Override
+	public boolean hasNext() {
+		if (current.findBlockOver() == null)  
+			return false;
+		return true;
+	}
+
+	@Override
+	public BuildingBlock next() {
+		BuildingBlock previous = current;
+		current = current.findBlockOver();
+		return previous;
+	}
+	
+	public void remove() { 
+
+		BuildingBlock tmp = current;
+		current = current.findBlockOver();
+		tmp.stackOver(null);
+		tmp.stackUnder(null);
+		
+	}
+	
+	
 }
