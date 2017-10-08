@@ -4,14 +4,17 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Set;
+import java.util.Stack;
 
 import sf.codingcomp.blocks.PolyBlock;
 
 public class PolyBlockImpl implements PolyBlock {
 
-	public Set<PolyBlock> connections;
-	public boolean isChain = false; 
+	Set<PolyBlock> connections;
+	Set<PolyBlock> seen;
 
 	public PolyBlockImpl() {
 		connections = new HashSet<PolyBlock>();
@@ -19,8 +22,37 @@ public class PolyBlockImpl implements PolyBlock {
 
 	@Override
 	public Iterator<PolyBlock> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+		Stack<PolyBlock> toVisitInit = new Stack<PolyBlock>();
+		toVisitInit.add(this);
+		HashSet<PolyBlock> seenIteratorInit = new HashSet<PolyBlock>();
+		seenIteratorInit.add(this);
+		
+		return new Iterator<PolyBlock>() {
+			Stack<PolyBlock> toVisit = toVisitInit;
+			HashSet<PolyBlock> seenIterator = seenIteratorInit;
+			
+			@Override
+			public boolean hasNext() {
+				return (toVisit.size() > 0);
+			}
+
+			@Override
+			public PolyBlock next() {
+				PolyBlockImpl visitNext = (PolyBlockImpl) toVisit.peek();
+				while (!toVisit.isEmpty()) {
+					for (PolyBlock p : visitNext.connections) {
+						if (!seenIterator.contains(p)) {
+							toVisit.add(p);
+							seenIterator.add(p);
+							return visitNext;
+						}
+					}
+					toVisit.pop();
+				}
+				return visitNext;
+			}
+			
+		};
 	}
 
 	@Override
@@ -59,21 +91,9 @@ public class PolyBlockImpl implements PolyBlock {
 
 	@Override
 	public int size() {
-		isChain = true; 
-		if(connections.size() < 1) {
-			isChain = false; 
-			return 1; 
-		}
-		
-		int largest = 0;
-		for (PolyBlock b : connections) {
-			PolyBlockImpl _temp = (PolyBlockImpl) b; 
-			if(!_temp.isChain && b.size() > largest) {
-				largest = b.size(); 
-			}
-		}
-		isChain = false; 
-		return 1 + largest;
+		seen = new HashSet<PolyBlock>();
+		bfs(this);
+		return seen.size();
 	}
 
 	@Override
@@ -96,5 +116,16 @@ public class PolyBlockImpl implements PolyBlock {
 		//returns copy of this object 
 		return copy.get(this); 
 	}
-
+	
+	private void bfs (PolyBlock b) {
+		seen.add(b);
+		for (PolyBlock cb : ((PolyBlockImpl) b).connections) {
+			if (!seen.contains(cb)) {
+				seen.add(cb);
+				bfs(cb);
+			}
+		}
+		
+		return;
+	}
 }

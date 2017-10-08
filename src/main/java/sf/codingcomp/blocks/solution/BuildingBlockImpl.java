@@ -64,7 +64,10 @@ public class BuildingBlockImpl implements BuildingBlock {
 		};
 	}
 
-	// Puts block under us
+	/** 
+	 * @param b is placed under our object 
+	 * Handles null objects and potential loops created through the blocks s
+	 */
 	@Override
 	public void stackOver(BuildingBlock b) {
 		BuildingBlockImpl _temp = (BuildingBlockImpl) b;
