@@ -1,9 +1,11 @@
 package sf.codingcomp.blocks.solution;
 
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.Objects;
 
 import sf.codingcomp.blocks.BuildingBlock;
+import sf.codingcomp.blocks.CircularReferenceException;
 
 public class BuildingBlockImpl implements BuildingBlock {
 
@@ -12,8 +14,7 @@ public class BuildingBlockImpl implements BuildingBlock {
 
     @Override
     public Iterator<BuildingBlock> iterator() {
-        // TODO Auto-generated method stub
-        return null;
+        return new BuildingBlockIterator(this);
     }
 
     @Override
@@ -27,8 +28,11 @@ public class BuildingBlockImpl implements BuildingBlock {
             oldBelow.stackUnder(null);
             return;
         }
+
         if(Objects.equals(this.blockBelow,b)) return;
+        if(wouldAddingOverCauseCircular(b)) throw new CircularReferenceException();
         if(this.blockBelow!=null){
+            this.blockBelow.stackUnder(null);
             b.stackUnder(null);
         }
 
@@ -48,11 +52,33 @@ public class BuildingBlockImpl implements BuildingBlock {
             return;
         }
         if(Objects.equals(this.blockAbove,b)) return;
+        if(wouldAddingUnderCauseCircular(b)) throw new CircularReferenceException();
         if(this.blockAbove!=null){
+            this.blockBelow.stackOver(null);
             b.stackOver(null);
         }
         this.blockAbove = b;
         b.stackOver(this);
+    }
+
+    private boolean wouldAddingUnderCauseCircular(BuildingBlock candidate){
+        //Testing validity of adding this under the candidate
+        BuildingBlock test = this;
+        while (test.findBlockUnder()!=null){
+            test = test.findBlockUnder();
+            if(Objects.equals(test,candidate)) return true;
+        }
+        return false;
+    }
+
+    private boolean wouldAddingOverCauseCircular(BuildingBlock candidate){
+        //Testing validity of adding this under the candidate
+        BuildingBlock test = this;
+        while (test.findBlockOver()!=null){
+            test = test.findBlockOver();
+            if(Objects.equals(test,candidate)) return true;
+        }
+        return false;
     }
 
     @Override
@@ -63,6 +89,37 @@ public class BuildingBlockImpl implements BuildingBlock {
     @Override
     public BuildingBlock findBlockOver() {
         return blockAbove;
+    }
+
+    public class BuildingBlockIterator implements Iterator<BuildingBlock>{
+
+        BuildingBlock root;
+        BuildingBlock current;
+
+        public BuildingBlockIterator(BuildingBlock root) {
+            while(root.findBlockUnder()!=null) root = root.findBlockUnder();
+            this.root = root;
+            this.current = root;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return current!=null;
+        }
+
+        @Override
+        public BuildingBlock next() {
+            BuildingBlock temp = current;
+            this.current = current.findBlockOver();
+            return temp;
+        }
+
+        @Override
+        public void remove() {
+            if(Objects.equals(root,current)) throw new IllegalStateException();
+
+        }
+
     }
 
 }
