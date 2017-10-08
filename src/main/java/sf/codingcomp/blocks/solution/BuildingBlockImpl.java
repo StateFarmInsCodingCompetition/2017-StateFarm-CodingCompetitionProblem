@@ -13,10 +13,13 @@ public class BuildingBlockImpl implements BuildingBlock {
 		below = null;
 		
 	}
-    @Override
+    @SuppressWarnings({ "unused", "unchecked" })
+	@Override
     public Iterator<BuildingBlock> iterator() {
         // TODO Auto-generated method stub
-        return null;
+    	BuildingBlock test=	findBlockUnder();
+    	
+        return (Iterator<BuildingBlock>) test;
     }
 
     @Override
