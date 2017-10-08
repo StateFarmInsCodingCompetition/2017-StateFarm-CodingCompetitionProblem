@@ -196,14 +196,14 @@ public class BuildingBlockTest {
         getBlock3().stackOver(getBlock4());
 
         Iterator<BuildingBlock> it = getBlock3().iterator();
+         assertTrue(it.hasNext());
+        it.next(); //4 [3]
         assertTrue(it.hasNext());
-        it.next();
+        it.next(); //3 [2]
         assertTrue(it.hasNext());
-        it.next();
+        it.next(); //2 [1]
         assertTrue(it.hasNext());
-        it.next();
-        assertTrue(it.hasNext());
-        it.next();
+        it.next(); //1 [0]
         assertFalse(it.hasNext());
     }
 

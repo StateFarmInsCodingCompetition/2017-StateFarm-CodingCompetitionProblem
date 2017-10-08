@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.function.Consumer;
 
 import sf.codingcomp.blocks.BuildingBlock;
+import sf.codingcomp.blocks.CircularReferenceException;
 
 public class BuildingBlockImpl implements BuildingBlock {
 
@@ -21,13 +22,19 @@ public class BuildingBlockImpl implements BuildingBlock {
     @Override
     public void stackOver(BuildingBlock b) {
         if(b == null) {
-//            BuildingBlock b = findBlockOver();
             BuildingBlock bb = findBlockUnder();
             blockUnder= null;
             if(bb != null) bb.stackUnder(null);
         }
         else if(findBlockUnder() == null || !findBlockUnder().equals(b)) {
             BuildingBlock bb = findBlockUnder();
+            BuildingBlock temp = this;
+            while(temp.findBlockOver()!=null){
+                if(b.equals(temp.findBlockOver())){
+                    throw new CircularReferenceException();
+                }
+                temp = temp.findBlockOver();
+            }
             if(bb != null) bb.stackUnder(null);
             blockUnder = b;
             b.stackUnder(this);
@@ -45,6 +52,13 @@ public class BuildingBlockImpl implements BuildingBlock {
             if(bb != null) bb.stackOver(null);
         }
         else if(findBlockOver() == null || !findBlockOver().equals(b)) {
+            BuildingBlock temp = this;
+            while(temp.findBlockUnder()!=null){
+                if(b.equals(temp.findBlockUnder())){
+                    throw new CircularReferenceException();
+                }
+                temp = temp.findBlockUnder();
+            }
             BuildingBlock bb = findBlockOver();
             if(bb != null) bb.stackOver(null);
 
@@ -91,6 +105,9 @@ public class BuildingBlockImpl implements BuildingBlock {
 
         @Override
         public boolean hasNext() {
+            if(blocks.get(cursor).findBlockOver()!=null || !iterated){
+                return true;
+            }
             return false;
         }
 
