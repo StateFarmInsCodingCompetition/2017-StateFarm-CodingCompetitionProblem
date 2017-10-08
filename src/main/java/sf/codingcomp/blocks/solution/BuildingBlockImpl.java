@@ -28,6 +28,10 @@ public class BuildingBlockImpl implements BuildingBlock {
             return;
         }
         if(Objects.equals(this.blockBelow,b)) return;
+        if(this.blockBelow!=null){
+            b.stackUnder(null);
+        }
+
         this.blockBelow = b;
         b.stackUnder(this);
     }
@@ -44,6 +48,9 @@ public class BuildingBlockImpl implements BuildingBlock {
             return;
         }
         if(Objects.equals(this.blockAbove,b)) return;
+        if(this.blockAbove!=null){
+            b.stackOver(null);
+        }
         this.blockAbove = b;
         b.stackOver(this);
     }
