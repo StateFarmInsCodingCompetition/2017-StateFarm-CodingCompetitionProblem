@@ -23,14 +23,14 @@ public class PolyBlockImpl implements PolyBlock {
 	@Override
 	public Iterator<PolyBlock> iterator() {
 		Stack<PolyBlock> toVisitInit = new Stack<PolyBlock>();
-		toVisitInit.add(this);
+		toVisitInit.push(this);
 		HashSet<PolyBlock> seenIteratorInit = new HashSet<PolyBlock>();
 		seenIteratorInit.add(this);
-		
+
 		return new Iterator<PolyBlock>() {
 			Stack<PolyBlock> toVisit = toVisitInit;
 			HashSet<PolyBlock> seenIterator = seenIteratorInit;
-			
+
 			@Override
 			public boolean hasNext() {
 				return (toVisit.size() > 0);
@@ -40,9 +40,9 @@ public class PolyBlockImpl implements PolyBlock {
 			public PolyBlock next() {
 				PolyBlockImpl visitNext = (PolyBlockImpl) toVisit.peek();
 				while (!toVisit.isEmpty()) {
-					for (PolyBlock p : visitNext.connections) {
+					for (PolyBlock p : ((PolyBlockImpl) toVisit.peek()).connections) {
 						if (!seenIterator.contains(p)) {
-							toVisit.add(p);
+							toVisit.push(p);
 							seenIterator.add(p);
 							return visitNext;
 						}
@@ -51,7 +51,7 @@ public class PolyBlockImpl implements PolyBlock {
 				}
 				return visitNext;
 			}
-			
+
 		};
 	}
 
@@ -98,26 +98,28 @@ public class PolyBlockImpl implements PolyBlock {
 
 	@Override
 	public PolyBlock copy() {
-//		return this; 
-		Map <PolyBlockImpl, PolyBlockImpl> copy = new HashMap <PolyBlockImpl, PolyBlockImpl> (); 
-		
-		//Creates a map of every existing connected polyblock mapped to the hash of the existing block 
-		for(PolyBlock p : this) {
-			copy.put((PolyBlockImpl) p, new PolyBlockImpl()); 
-		} 
-		
-		//Iterates through polyblocks and their connections to re-create the connections in the copy 
-		for(PolyBlock p : this) {
-			for(PolyBlock q : ( (PolyBlockImpl) p).connections) {
-				copy.get(p).connect(q); 
+		Map<PolyBlockImpl, PolyBlockImpl> copy = new HashMap<>();
+
+		// Creates a map of every existing connected polyblock mapped to the hash of the
+		// existing block
+		for (PolyBlock p : this) {
+			copy.put((PolyBlockImpl) p, new PolyBlockImpl());
+		}
+
+		// Iterates through polyblocks and their connections to re-create the
+		// connections in the copy
+		for (PolyBlock p : this) {
+			for (PolyBlock q : ((PolyBlockImpl) p).connections) {
+				copy.get(p).connect(copy.get(q));
 			}
 		}
-		
-		//returns copy of this object 
-		return copy.get(this); 
+
+		// returns copy of this object
+		return copy.get(this);
+
 	}
-	
-	private void bfs (PolyBlock b) {
+
+	private void bfs(PolyBlock b) {
 		seen.add(b);
 		for (PolyBlock cb : ((PolyBlockImpl) b).connections) {
 			if (!seen.contains(cb)) {
@@ -125,7 +127,7 @@ public class PolyBlockImpl implements PolyBlock {
 				bfs(cb);
 			}
 		}
-		
+
 		return;
 	}
 }
