@@ -14,9 +14,12 @@ public class BuildingBlockImpl implements BuildingBlock {
     @Override
     public Iterator<BuildingBlock> iterator() {
     		BuildingBlockImpl begin = this;
-    		
+    		while (begin.below != null) {
+    			begin = begin.below;
+    		}
+    		BuildingBlockImpl temp = begin;
     		return new Iterator<BuildingBlock>() {
-    				BuildingBlockImpl returnBlock = begin;
+    				BuildingBlockImpl returnBlock = temp;
     				int index = -1;
     				boolean removed = false;
 	    			@Override
@@ -30,7 +33,7 @@ public class BuildingBlockImpl implements BuildingBlock {
 
 				@Override
 				public boolean hasNext() {
-					if (index == -1 || returnBlock != null) {
+					if (index == -1 || returnBlock.above != null) {
 						return true;
 					}
 					return false; 
