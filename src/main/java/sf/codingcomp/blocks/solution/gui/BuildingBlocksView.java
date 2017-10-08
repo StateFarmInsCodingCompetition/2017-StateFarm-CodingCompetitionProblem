@@ -6,7 +6,6 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -119,7 +118,7 @@ public class BuildingBlocksView extends JPanel implements MouseListener {
 		for (StorageBuildingBlock<String> block : blocks.keySet()) {
 			if (blocks.get(block).contains(p)) {
 				selected = block;
-				panel.setStackButtonsEnabled(true);
+				panel.setMenuButtonsEnabled(true);
 				this.repaint();
 				return;
 			}
@@ -130,7 +129,7 @@ public class BuildingBlocksView extends JPanel implements MouseListener {
 	
 	public void deselectBlock() {
 		selected = null;
-		panel.setStackButtonsEnabled(false);
+		panel.setMenuButtonsEnabled(false);
 	}
 
 	// Unneeded methods
