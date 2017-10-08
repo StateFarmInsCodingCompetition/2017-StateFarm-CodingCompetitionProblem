@@ -9,6 +9,14 @@ public class StoragePolyBlockImpl<T> extends PolyBlockImpl implements StoragePol
 	 */
 	private T value;
 	
+	/**
+	 * Creates a new poly block with the specified value
+	 * @param value The value for this poly block
+	 */
+	public StoragePolyBlockImpl(T value) {
+		this.value = value;
+	}
+	
     @Override
     public T getValue() {
         return value;
