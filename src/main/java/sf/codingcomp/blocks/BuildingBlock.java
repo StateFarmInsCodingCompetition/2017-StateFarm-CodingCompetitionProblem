@@ -1,7 +1,5 @@
 package sf.codingcomp.blocks;
 
-
-
 /**
  * 
  * A building block may connect to one other building block above, and one below.

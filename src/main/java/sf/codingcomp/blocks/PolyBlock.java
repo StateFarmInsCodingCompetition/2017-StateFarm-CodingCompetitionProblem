@@ -1,6 +1,5 @@
 package sf.codingcomp.blocks;
 
-
 /**
  * 
  * Object which can have an unlimited amount of connections to other PolyBlocks,
@@ -53,5 +52,7 @@ public interface PolyBlock extends Iterable<PolyBlock> {
 	 * @return
 	 */
 	PolyBlock copy();
+	
+	
 
 }
