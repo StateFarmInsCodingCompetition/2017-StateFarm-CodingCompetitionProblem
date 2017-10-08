@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 import sf.codingcomp.blocks.BuildingBlock;
+import sf.codingcomp.blocks.CircularReferenceException;
 
 public class BuildingBlockImpl implements BuildingBlock {
 
@@ -31,6 +32,16 @@ public class BuildingBlockImpl implements BuildingBlock {
     			below = null;
     			return;
     		}
+    		
+    		// Test for Circular Reference
+    		BuildingBlock tempiter = b;
+    		while (tempiter != null) {
+    			if (tempiter.findBlockUnder() == this) {
+    				throw new CircularReferenceException();
+    			}
+    			tempiter = b.findBlockUnder();
+    		}
+    		
     		if (this.findBlockUnder() != null) {
     			this.findBlockUnder().stackUnder(null);
     		}
@@ -56,6 +67,16 @@ public class BuildingBlockImpl implements BuildingBlock {
     			above = null;
     			return;
     		}
+    		
+    		// Test for Circular Reference
+    		BuildingBlock tempiter = this;
+    		while (tempiter != null) {
+    			if (tempiter.findBlockOver() == this) {
+    				throw new CircularReferenceException();
+    			}
+    			tempiter = this.findBlockOver();
+    		}
+    		
     		if (b.findBlockUnder() != null) {
     			b.findBlockUnder().stackUnder(null);
     		}
