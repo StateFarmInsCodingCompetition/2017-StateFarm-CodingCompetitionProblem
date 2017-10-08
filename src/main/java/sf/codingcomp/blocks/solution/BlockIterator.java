@@ -29,14 +29,20 @@ public class BlockIterator<BuildingBlock> implements Iterator<BuildingBlock>{
 
 	@Override
 	public BuildingBlock next() {
-		
+		BuildingBlock temp = null;
+		if (check.hasNext())
+			temp = stacked.iterator().next();
 		// TODO Auto-generated method stub
-		return null;
+		return temp;
 	}
 
 	@Override
     public void remove() {
-        
+		if (check.hasNext())
+			check.remove();
+			
+		// TODO Auto-generated method stub
+		
     }
 
 }
