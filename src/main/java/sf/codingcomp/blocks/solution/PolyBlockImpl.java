@@ -181,4 +181,8 @@ public class PolyBlockImpl implements PolyBlock {
 	    	Arrays.sort(sizesB);
 	    	return Arrays.equals(sizesA, sizesB);
     }
+    
+    public List<PolyBlock> getConnections() {
+    	return connections;
+    }
 }
