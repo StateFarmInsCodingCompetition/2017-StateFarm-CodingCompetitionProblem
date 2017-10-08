@@ -44,10 +44,13 @@ public class BuildingBlockImpl implements BuildingBlock {
 					if (index == -1 || removed) {
 						throw new IllegalStateException();
 					}
+					
 					returnBlock.above.below = returnBlock.below;
 					returnBlock.below.above = returnBlock.above;
+					BuildingBlockImpl tempo = returnBlock.below;
 					returnBlock.above = null;
 					returnBlock.below = null;
+					returnBlock = tempo;
 					removed = true;
 				}
     		};
