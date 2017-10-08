@@ -2,15 +2,15 @@ package sf.codingcomp.blocks;
 
 
 /**
- * 
  * Like a BuildingBlock, but it also manages a value
  *
  * @param <T>
  */
-public interface StorageBuildingBlock<T> extends BuildingBlock {
-	
-	T getValue();
+public interface StorageBuildingBlock<T>
+  extends BuildingBlock {
 
-	void setValue(T value);
-	
+  T getValue();
+
+  void setValue( T value );
+
 }
