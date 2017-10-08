@@ -6,34 +6,65 @@ import sf.codingcomp.blocks.BuildingBlock;
 
 public class BuildingBlockImpl implements BuildingBlock {
 
-    @Override
-    public Iterator<BuildingBlock> iterator() {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	public BuildingBlockImpl under; //Block under us 
+	public BuildingBlockImpl over; //Block over us
 
-    @Override
-    public void stackOver(BuildingBlock b) {
-        // TODO Auto-generated method stub
-        
-    }
+	public BuildingBlockImpl() {
+		this.under = null;
+		this.over = null;
+	}
 
-    @Override
-    public void stackUnder(BuildingBlock b) {
-        // TODO Auto-generated method stub
-        
-    }
+	@Override
+	public Iterator<BuildingBlock> iterator() {
+		return new Iterator<BuildingBlock> {
+			
+		};
+	}
 
-    @Override
-    public BuildingBlock findBlockUnder() {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	// Puts block under us 
+	@Override
+	public void stackOver(BuildingBlock b) {
+		BuildingBlockImpl _temp = (BuildingBlockImpl) b; 
+		
+		if (this.under == null) {
+			this.under = _temp;
+		} else {
+			this.under.over = null;
+			this.under = _temp;
+		}
 
-    @Override
-    public BuildingBlock findBlockOver() {
-        // TODO Auto-generated method stub
-        return null;
-    }
+		if (b != null && b.findBlockOver() != this) {
+			_temp.stackUnder(this);
+		}
+	}
+
+	// Puts block over us 
+	@Override
+	public void stackUnder(BuildingBlock b) {
+		BuildingBlockImpl _temp = (BuildingBlockImpl) b; 
+
+		if (this.over == null) {
+			this.over = _temp;
+		} else {
+			this.over.under = null;
+			this.over = _temp;
+		}
+
+		if (b != null && b.findBlockUnder() != this) {
+			_temp.stackOver(this);
+		}
+	}
+
+	// Returns block under us 
+	@Override
+	public BuildingBlock findBlockUnder() {
+		return this.under;
+	}
+
+	// Returns block over us 
+	@Override
+	public BuildingBlock findBlockOver() {
+		return this.over;
+	}
 
 }
