@@ -8,8 +8,8 @@ import sf.codingcomp.blocks.CircularReferenceException;
 
 public class BuildingBlockImpl implements BuildingBlock {
 
-	public BuildingBlock above = null;
-	public BuildingBlock below = null;
+	BuildingBlockImpl above = null;
+	BuildingBlockImpl below = null;
 	
     @Override
     public Iterator<BuildingBlock> iterator() {
@@ -19,82 +19,80 @@ public class BuildingBlockImpl implements BuildingBlock {
 
     @Override
     public void stackOver(BuildingBlock b) {
-    		if (this.findBlockUnder() == b) {
-			return;
-		}
     		if (b == null) {
-    			if (below != null) {
-    				BuildingBlock temp = below;
-    				below = null;
-    				temp.stackUnder(null);
-    				return;
-    			}
-    			below = null;
+    			this.below.above = null;
+    			this.below = null;
     			return;
     		}
     		
-    		// Test for Circular Reference
-    		BuildingBlock tempiter = b;
-    		while (tempiter != null) {
-    			if (tempiter.findBlockUnder() == this) {
-    				throw new CircularReferenceException();
-    			}
-    			tempiter = b.findBlockUnder();
+    		BuildingBlockImpl bi = (BuildingBlockImpl) b;
+    		
+    		if (this.below != null) {
+    			this.below.above = null;
     		}
     		
-    		if (this.findBlockUnder() != null) {
-    			this.findBlockUnder().stackUnder(null);
+    		if (bi.above != null) {
+    			bi.above.below = null;
     		}
-    		below = b;
-    		if (b != null) {
-    			below.stackUnder(this);
-    		}
+    		bi.above = this;
+    		this.below = bi;
         
+    		// Test for Circular Reference
+    		BuildingBlockImpl tempiter1 = this;
+    		BuildingBlockImpl tempiter2 = this;
+    		while (tempiter1 != null && tempiter2 != null && tempiter2.below != null) {
+    			tempiter1 = tempiter1.below;
+    			tempiter2 = tempiter2.below.below;
+    			
+    			if (tempiter1 == tempiter2) {
+    				this.below = null;
+    				bi.above = null;
+    				throw new CircularReferenceException();
+    			}
+    		}
     }
 
     @Override
     public void stackUnder(BuildingBlock b) {
-    		if (this.findBlockOver() == b) {
-    			return;
-    		}
     		if (b == null) {
-    			if (above != null) {
-    				BuildingBlock temp = above;
-    				above = null;
-    				temp.stackOver(null);
-    				return;
-    			}
-    			above = null;
+    			this.above.below = null;
+    			this.above = null;
     			return;
     		}
+    		
+		BuildingBlockImpl bi = (BuildingBlockImpl) b;
+    		if (this.above != null) {
+    			this.above.below = null;
+    		}
+    		
+    		if (bi.below != null) {
+    			bi.below.above = null;
+    		}
+    		bi.below = this;
+    		this.above = bi;
     		
     		// Test for Circular Reference
-    		BuildingBlock tempiter = this;
-    		while (tempiter != null) {
-    			if (tempiter.findBlockOver() == this) {
+    		BuildingBlockImpl tempiter1 = this;
+    		BuildingBlockImpl tempiter2 = this;
+    		while (tempiter1 != null && tempiter2 != null && tempiter2.above != null) {
+    			tempiter1 = tempiter1.above;
+    			tempiter2 = tempiter2.above.above;
+    			
+    			if (tempiter1 == tempiter2) {
+    				this.above = null;
+    				bi.below = null;
     				throw new CircularReferenceException();
     			}
-    			tempiter = this.findBlockOver();
-    		}
-    		
-    		if (b.findBlockUnder() != null) {
-    			b.findBlockUnder().stackUnder(null);
-    		}
-    		above = b;
-    		if (b != null) {
-    			above.stackOver(this);
     		}
     }
 
     @Override
     public BuildingBlock findBlockUnder() {
-        // TODO Auto-generated method stub
         return below;
     }
 
     @Override
     public BuildingBlock findBlockOver() {
-        // TODO Auto-generated method stub
         return above;
     }
 
