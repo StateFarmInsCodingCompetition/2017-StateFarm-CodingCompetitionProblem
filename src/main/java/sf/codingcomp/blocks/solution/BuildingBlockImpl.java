@@ -10,6 +10,22 @@ public class BuildingBlockImpl implements BuildingBlock {
     BuildingBlock blockAbove;
     BuildingBlock blockUnder;
 
+    public BuildingBlock getBlockAbove() {
+        return blockAbove;
+    }
+
+    public void setBlockAbove(BuildingBlock blockAbove) {
+        this.blockAbove = blockAbove;
+    }
+
+    public BuildingBlock getBlockUnder() {
+        return blockUnder;
+    }
+
+    public void setBlockUnder(BuildingBlock blockUnder) {
+        this.blockUnder = blockUnder;
+    }
+
     @Override
     public Iterator<BuildingBlock> iterator() {
         // TODO Auto-generated method stub
@@ -18,7 +34,13 @@ public class BuildingBlockImpl implements BuildingBlock {
 
     @Override
     public void stackOver(BuildingBlock b) {
-        if(findBlockUnder() == null || !findBlockUnder().equals(b)) {
+        if(b == null) {
+//            BuildingBlock b = findBlockOver();
+            BuildingBlock bb = findBlockUnder();
+            blockUnder= null;
+            if(bb != null) bb.stackUnder(null);
+        }
+        else if(findBlockUnder() == null || !findBlockUnder().equals(b)) {
             blockUnder = b;
             b.stackUnder(this);
         }
@@ -28,7 +50,12 @@ public class BuildingBlockImpl implements BuildingBlock {
 
     @Override
     public void stackUnder(BuildingBlock b) {
-        if(findBlockOver() == null || !findBlockOver().equals(b)) {
+        if(b == null) {
+            BuildingBlock bb = findBlockOver();
+            blockAbove = null;
+            if(bb != null) bb.stackOver(null);
+        }
+        else if(findBlockOver() == null || !findBlockOver().equals(b)) {
             blockAbove = b;
             b.stackOver(this);
         }
