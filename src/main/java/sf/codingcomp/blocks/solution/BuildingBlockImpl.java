@@ -16,6 +16,7 @@ public class BuildingBlockImpl implements BuildingBlock {
     		BuildingBlockImpl begin = this;
     		return new Iterator<BuildingBlock>() {
     				BuildingBlockImpl returnBlock = begin;
+    				boolean removed = false;
 	    			@Override
 	    			public BuildingBlock next() {
 	    				returnBlock = returnBlock.below;
@@ -28,6 +29,18 @@ public class BuildingBlockImpl implements BuildingBlock {
 						return true;
 					}
 					return false; 
+				}
+				
+				@Override
+				public void remove() {
+					if (removed) {
+						throw new IllegalStateException();
+					}
+					returnBlock.above.below = returnBlock.below;
+					returnBlock.below.above = returnBlock.above;
+					returnBlock.above = null;
+					returnBlock.below = null;
+					removed = true;
 				}
     		};
     }
