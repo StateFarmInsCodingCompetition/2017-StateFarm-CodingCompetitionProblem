@@ -1,10 +1,13 @@
 package sf.codingcomp.blocks.solution;
 
+import java.awt.List;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import sf.codingcomp.blocks.BuildingBlock;
 
 public class BuildingBlockImpl implements BuildingBlock {
+	
 	
 	BuildingBlock above;
 	BuildingBlock below;
@@ -13,15 +16,12 @@ public class BuildingBlockImpl implements BuildingBlock {
 		below = null;
 		
 	}
-    @SuppressWarnings({ "unused", "unchecked" })
-	@Override
+    @Override
     public Iterator<BuildingBlock> iterator() {
         // TODO Auto-generated method stub
-    	BuildingBlock test=	findBlockUnder();
-    	
-        return (Iterator<BuildingBlock>) test;
+    	return null;
     }
-
+    	
     @Override
     public void stackOver(BuildingBlock b) {
         // TODO Auto-generated method stub
