@@ -107,10 +107,14 @@ public class BuildingBlockImpl implements BuildingBlock {
         @Override
         public void remove() {
             BuildingBlock b = blocks.get(cursor);
-            BuildingBlock bAbove = b.findBlockOver();
-            BuildingBlock bUnder = b.findBlockUnder();
-            bAbove.stackOver(bUnder);
-            bUnder.stackUnder(bAbove);
+            if(b.findBlockOver()==null && b.findBlockUnder()==null){
+                throw new IllegalStateException();
+            }else{
+                BuildingBlock bAbove = b.findBlockOver();
+                BuildingBlock bUnder = b.findBlockUnder();
+                bAbove.stackOver(bUnder);
+                bUnder.stackUnder(bAbove);
+            }
         }
 
         @Override

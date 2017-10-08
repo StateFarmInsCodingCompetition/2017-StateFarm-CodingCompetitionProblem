@@ -95,6 +95,7 @@ public class BuildingBlockTest {
         getBlock3().stackUnder(getBlock4());
 
         Iterator<BuildingBlock> it = getBlock1().iterator();
+
         BuildingBlock b = it.next();
         assertSame(getBlock1(), b);
         b = it.next();
