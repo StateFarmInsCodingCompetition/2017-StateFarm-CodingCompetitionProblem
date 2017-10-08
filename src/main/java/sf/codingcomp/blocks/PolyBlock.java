@@ -1,6 +1,8 @@
 package sf.codingcomp.blocks;
 
 
+import java.util.List;
+
 /**
  * 
  * Object which can have an unlimited amount of connections to other PolyBlocks,
@@ -31,7 +33,7 @@ public interface PolyBlock extends Iterable<PolyBlock> {
 	 * 
 	 * @param aPolyBlock
 	 *            the PolyBlock to look for
-	 * @return whether this PolyBlock has a connection to the passed
+	 * @return whether this PolyBlock has a direct connection to the passed
 	 *         PolyBlock
 	 */
 	boolean contains(PolyBlock aPolyBlock);
@@ -49,9 +51,14 @@ public interface PolyBlock extends Iterable<PolyBlock> {
 	int size();
 	
 	/**
-	 * Returns a copy of all connected PolyBlocks
-	 * @return
+	 *
+	 * @return a copy of all connected PolyBlocks
 	 */
 	PolyBlock copy();
 
+	/**
+	 *
+	 * @return a list of all directly connected PolyBlocks
+	 */
+	List<PolyBlock> getDirectConnections ();
 }
