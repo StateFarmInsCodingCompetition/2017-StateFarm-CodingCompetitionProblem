@@ -6,8 +6,8 @@ import sf.codingcomp.blocks.BuildingBlock;
 
 public class BuildingBlockImpl implements BuildingBlock {
 
-	public BuildingBlockImpl under; //Block under us 
-	public BuildingBlockImpl over; //Block over us
+	public BuildingBlockImpl under; // Block under us
+	public BuildingBlockImpl over; // Block over us
 
 	public BuildingBlockImpl() {
 		this.under = null;
@@ -52,11 +52,11 @@ public class BuildingBlockImpl implements BuildingBlock {
 		};
 	}
 
-	// Puts block under us 
+	// Puts block under us
 	@Override
 	public void stackOver(BuildingBlock b) {
-		BuildingBlockImpl _temp = (BuildingBlockImpl) b; 
-		
+		BuildingBlockImpl _temp = (BuildingBlockImpl) b;
+
 		if (this.under == null) {
 			this.under = _temp;
 		} else {
@@ -69,10 +69,10 @@ public class BuildingBlockImpl implements BuildingBlock {
 		}
 	}
 
-	// Puts block over us 
+	// Puts block over us
 	@Override
 	public void stackUnder(BuildingBlock b) {
-		BuildingBlockImpl _temp = (BuildingBlockImpl) b; 
+		BuildingBlockImpl _temp = (BuildingBlockImpl) b;
 
 		if (this.over == null) {
 			this.over = _temp;
@@ -86,13 +86,13 @@ public class BuildingBlockImpl implements BuildingBlock {
 		}
 	}
 
-	// Returns block under us 
+	// Returns block under us
 	@Override
 	public BuildingBlock findBlockUnder() {
 		return this.under;
 	}
 
-	// Returns block over us 
+	// Returns block over us
 	@Override
 	public BuildingBlock findBlockOver() {
 		return this.over;

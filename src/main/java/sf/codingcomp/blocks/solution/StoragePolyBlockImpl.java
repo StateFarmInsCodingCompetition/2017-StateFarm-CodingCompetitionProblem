@@ -4,16 +4,15 @@ import sf.codingcomp.blocks.StoragePolyBlock;
 
 public class StoragePolyBlockImpl<T> extends PolyBlockImpl implements StoragePolyBlock<T> {
 
-    @Override
-    public T getValue() {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	T val = null;
 
-    @Override
-    public void setValue(T value) {
-        // TODO Auto-generated method stub
+	@Override
+	public T getValue() {
+		return val;
+	}
 
-    }
-
+	@Override
+	public void setValue(T value) {
+		val = value;
+	}
 }
