@@ -30,7 +30,7 @@ public class BuildingBlockImpl implements BuildingBlock {
 
 				@Override
 				public boolean hasNext() {
-					if (index == -1 || returnBlock.above != null) {
+					if (index == -1 || returnBlock != null) {
 						return true;
 					}
 					return false; 
@@ -38,7 +38,7 @@ public class BuildingBlockImpl implements BuildingBlock {
 				
 				@Override
 				public void remove() {
-					if (removed) {
+					if (index == -1 || removed) {
 						throw new IllegalStateException();
 					}
 					returnBlock.above.below = returnBlock.below;
