@@ -31,6 +31,7 @@ public class PolyBlockPanel extends JPanel {
 	private static final Font BLOCK_ID_FONT = new Font("Arial", Font.PLAIN, 20);
 	private static final Font TOOLS_HEADER = new Font("Arial", Font.PLAIN, 30);
 	private static final Font TOOLS_CONT = new Font("Arial", Font.PLAIN, 20);
+	private static final int SIDEBAR_WIDTH = 170;
 	
 	private static class BlockInfo {
 		
@@ -109,6 +110,8 @@ public class PolyBlockPanel extends JPanel {
 			
 			@Override
 			public void mousePressed(MouseEvent e) {
+				selectedNode = hoverNode;
+				
 				//Right click
 				if (e.getButton() == 3) {
 					if (!inTools) {
@@ -121,7 +124,6 @@ public class PolyBlockPanel extends JPanel {
 						selectedTool = hoverTool;
 					}
 					
-					selectedNode = hoverNode;
 					if (selectedNode != null) {
 						if (selectedTool == TOOL_DRAG) {
 							dragNode = selectedNode;
@@ -183,6 +185,8 @@ public class PolyBlockPanel extends JPanel {
 			g.fillRect(0, 0, getWidth(), getHeight());
 			
 			drawToolBox(g);
+			
+			drawInfoPanel(g);
 
 			//Draw connections
 			for (StoragePolyBlockImpl<BlockInfo> block : blocks) {
@@ -227,13 +231,13 @@ public class PolyBlockPanel extends JPanel {
 	}
 	
 	private void drawToolBox(Graphics2D g1) {
-		int wid = 120;
+		int wid = SIDEBAR_WIDTH;
 		int hei = 150;
 		
 		Graphics2D g = (Graphics2D) g1.create();
 		
 		try {
-			int tx = getWidth() - wid - 6;
+			int tx = getWidth() - wid;
 			g.translate(tx, 0);
 			Point ms = new Point(mse.x - tx, mse.y);
 			inTools = ms.x >= 0 && ms.y >= 0 && ms.x < wid && ms.y < hei;
@@ -270,6 +274,51 @@ public class PolyBlockPanel extends JPanel {
 				toolId++;
 			}
 			this.hoverTool = hoverTool;
+		} finally {
+			g.dispose();
+		}
+	}
+
+	private void drawInfoPanel(Graphics2D g1) {
+		Graphics2D g = (Graphics2D) g1.create();
+		
+		int wid = SIDEBAR_WIDTH;
+		int hei = 120;
+
+		try {
+			int tx = getWidth() - wid;
+			int ty = getHeight() - hei;
+			g.translate(tx, ty);
+			Point ms = new Point(mse.x - tx, mse.y);
+			
+			g.setColor(Color.YELLOW);
+			g.fillRect(0, 0, wid, hei);
+			
+			g.setFont(TOOLS_HEADER);
+			g.setColor(Color.BLACK);
+			FontMetrics fm = g.getFontMetrics(TOOLS_HEADER);
+			String str = "Info";
+			g.drawString(str, (wid - fm.stringWidth(str)) / 2, 30);
+			
+			if (selectedNode != null) {
+				StoragePolyBlockImpl<BlockInfo> block = getBlockById(selectedNode);
+				g.setFont(TOOLS_CONT);
+				int[] dx = {55, 0, 70};
+				String[] strs = {
+						"Name: " + block.getValue().id,
+						"Connections: " + block.connections(),
+						"Size: " + block.size()
+				};
+				int cury = 50;
+				int dy = 24;
+				int i = 0;
+				for (String ss : strs) {
+					g.drawString(ss, dx[i++] + 10, cury);
+					cury += dy;
+				}
+			}
+			
+			
 		} finally {
 			g.dispose();
 		}
