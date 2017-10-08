@@ -1,6 +1,8 @@
 package sf.codingcomp.blocks;
 
 
+import java.util.List;
+
 /**
  * Object which can have an unlimited amount of connections to other PolyBlocks,
  * but can be sequentially iterated.
@@ -52,4 +54,5 @@ public interface PolyBlock
    */
   PolyBlock copy();
 
+  List<PolyBlock> getConnectedPolyBlocks();
 }
