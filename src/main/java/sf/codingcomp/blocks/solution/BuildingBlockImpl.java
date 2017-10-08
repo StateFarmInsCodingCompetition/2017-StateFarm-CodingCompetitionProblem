@@ -3,6 +3,7 @@ package sf.codingcomp.blocks.solution;
 import java.util.Iterator;
 
 import sf.codingcomp.blocks.BuildingBlock;
+import sf.codingcomp.blocks.CircularReferenceException;
 
 public class BuildingBlockImpl implements BuildingBlock {
 	public BuildingBlock over, under;
@@ -15,27 +16,65 @@ public class BuildingBlockImpl implements BuildingBlock {
     @Override
     public void stackOver(BuildingBlock b) {
         // TODO Auto-generated method stub
+    	
     	if (this.under != null) {
     		((BuildingBlockImpl)this.under).over = null;
+    		this.under = null;
     	}
-    	if (((BuildingBlockImpl)b).over != null) {
+    	if (b != null && ((BuildingBlockImpl)b).over != null) {
     		((BuildingBlockImpl)(((BuildingBlockImpl)b).over)).under = null;
+    		((BuildingBlockImpl)b).over = null;
+    	}
+    	BuildingBlock x = this;
+    	while (x != null) {
+    		if (x == b) {
+    			throw new CircularReferenceException();
+    		}
+    		x = x.findBlockOver();
+    	}
+    	x = this;
+    	while (x != null) {
+    		if (x == b) {
+    			throw new CircularReferenceException();
+    		}
+    		x = x.findBlockUnder();
     	}
     	this.under = b;
-    	((BuildingBlockImpl)b).over = this;
+    	if (b != null) {
+    		((BuildingBlockImpl)b).over = this;
+    	}
     }
 
     @Override
     public void stackUnder(BuildingBlock b) {
         // TODO Auto-generated method stub
+    	
     	if (this.over != null) {
-    		((BuildingBlockImpl)this.over).over = null;
+    		((BuildingBlockImpl)this.over).under = null;
+    		this.over = null;
     	}
-    	if (((BuildingBlockImpl)b).under != null) {
+    	if (b != null && ((BuildingBlockImpl)b).under != null) {
     		((BuildingBlockImpl)(((BuildingBlockImpl)b).under)).over = null;
+    		((BuildingBlockImpl)b).under = null;
+    	}
+    	BuildingBlock x = this;
+    	while (x != null) {
+    		if (x == b) {
+    			throw new CircularReferenceException();
+    		}
+    		x = x.findBlockOver();
+    	}
+    	x = this;
+    	while (x != null) {
+    		if (x == b) {
+    			throw new CircularReferenceException();
+    		}
+    		x = x.findBlockUnder();
     	}
     	this.over = b;
-    	((BuildingBlockImpl)b).under = this;
+    	if (b != null) {
+    		((BuildingBlockImpl)b).under = this;
+    	}
     }
 
     @Override

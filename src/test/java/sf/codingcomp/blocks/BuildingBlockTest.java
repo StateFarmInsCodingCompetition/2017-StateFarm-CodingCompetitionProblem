@@ -133,9 +133,9 @@ public class BuildingBlockTest {
         assertSame(getBlock4(), b);
         b = it.next();
         assertSame(getBlock3(), b);
-
-        it.remove();
-
+        
+        it.remove();	
+        
         b = it.next();
         assertSame(getBlock2(), b);
         b = it.next();
