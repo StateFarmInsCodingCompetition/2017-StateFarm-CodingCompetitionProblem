@@ -38,8 +38,7 @@ public class BlockIterator<BuildingBlock> implements Iterator<BuildingBlock>{
 
 	@Override
     public void remove() {
-		if (check.hasNext())
-			check.remove();
+		check.remove();
 			
 		// TODO Auto-generated method stub
 		
