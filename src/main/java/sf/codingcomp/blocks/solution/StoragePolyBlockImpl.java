@@ -10,6 +10,13 @@ public class StoragePolyBlockImpl<T> extends PolyBlockImpl implements StoragePol
 	private T value;
 	
 	/**
+	 * Creates a new poly block with no value
+	 */
+	public StoragePolyBlockImpl() {
+		
+	}
+	
+	/**
 	 * Creates a new poly block with the specified value
 	 * @param value The value for this poly block
 	 */

@@ -10,6 +10,13 @@ public class StorageBuildingBlockImpl<T> extends BuildingBlockImpl implements St
 	private T value;
 	
 	/**
+	 * Creates a new building block with no value
+	 */
+	public StorageBuildingBlockImpl() {
+		
+	}
+	
+	/**
 	 * Creates a new building block with the specified value
 	 * @param value The value for this building block
 	 */
