@@ -70,6 +70,7 @@ public class BuildingBlockImpl implements BuildingBlock {
     private class stackingBlocks implements Iterator<BuildingBlock>{
 
         int cursor = 0;
+        boolean iterated = false;
 
         ArrayList<BuildingBlock> blocks;
 
@@ -95,6 +96,7 @@ public class BuildingBlockImpl implements BuildingBlock {
 
         @Override
         public BuildingBlock next() {
+            iterated = true;
             if(cursor == 0){
                 cursor = blocks.size()-1;
                 return blocks.get(cursor);
@@ -107,7 +109,7 @@ public class BuildingBlockImpl implements BuildingBlock {
         @Override
         public void remove() {
             BuildingBlock b = blocks.get(cursor);
-            if(b.findBlockOver()==null && b.findBlockUnder()==null){
+            if((b.findBlockOver()==null && b.findBlockUnder()==null) || !iterated){
                 throw new IllegalStateException();
             }else{
                 BuildingBlock bAbove = b.findBlockOver();
