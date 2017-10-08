@@ -8,6 +8,9 @@ import sf.codingcomp.blocks.PolyBlock;
 
 public class PolyBlockImpl implements PolyBlock {
 
+	/**
+	 * List which holds the connections for the {@link PolyBlock}
+	 */
 	public List<PolyBlock> connections;
 
 	public PolyBlockImpl() {
@@ -22,6 +25,9 @@ public class PolyBlockImpl implements PolyBlock {
 
 	@Override
 	public void connect(PolyBlock aPolyBlock) {
+		/*
+		 * Appropriately connects a PolyBlock
+		 */
 		if (aPolyBlock != null) {
 			if (!connections.contains(aPolyBlock)) {
 				connections.add(aPolyBlock);
@@ -64,7 +70,7 @@ public class PolyBlockImpl implements PolyBlock {
 	}
 	
 	/**
-	 * Recursive implementation to get blocks in a graph
+	 * Recursive implementation to get blocks in a graph/network of blocks
 	 */
 	private void addBlocksFromConnections(List<PolyBlock> totalBlocks, PolyBlock polyBlock){
 		for(PolyBlock block : ((PolyBlockImpl) polyBlock).connections){
@@ -75,8 +81,12 @@ public class PolyBlockImpl implements PolyBlock {
 		}
 	}
 
+	
 	@Override
 	public PolyBlock copy(){
+		/*
+		 * Rudimentary implementation of deep copy logic
+		 */
 		PolyBlockImpl block = new PolyBlockImpl();
 		block.connections = new ArrayList<PolyBlock>(this.connections);
 		return (PolyBlock) block;

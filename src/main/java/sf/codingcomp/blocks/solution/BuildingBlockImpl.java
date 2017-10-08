@@ -18,7 +18,7 @@ public class BuildingBlockImpl implements BuildingBlock {
         List<BuildingBlock> list = new LinkedList<BuildingBlock>();
 
         /*
-         * Add blocks above
+         * Add blocks stacked above
          */
         BuildingBlock targetBlock = this;
         while(targetBlock != null){
@@ -27,7 +27,7 @@ public class BuildingBlockImpl implements BuildingBlock {
         }
         
         /*
-         * Add blocks below
+         * Add blocks stacked below
          */
         targetBlock = this.blockUnder;
         while(targetBlock != null){
