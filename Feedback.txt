@@ -1,9 +1,2 @@
-Team Names:
-How many JUnits were you able to get to pass?
-
-Document and describe any enhancements included to help the judges properly grade your submission.	
-Step 1:	
-Step 2: 		
-
-Feedback for the coding competition?  Things you would like to see in future events?  	
-         *You have the option to send feedback to codingcompetition@statefarm.com after the competition if you are running short on time.
+1. I was not able to fully complete any jUnit, and only got a couple of passes on the first one. 
+2. Overall the problem seemed kind of simple, but actually implementing I could not find out a correct way to do it. I went over some of the easier 2013 example problems, getting part way through the security matrix problem, and they were easier for me than the 2017 problems.
