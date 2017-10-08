@@ -1,13 +1,15 @@
 package sf.codingcomp.blocks.solution;
 
+
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
+
 
 import sf.codingcomp.blocks.BuildingBlock;
 import sf.codingcomp.blocks.CircularReferenceException;
 
 public class BuildingBlockImpl implements BuildingBlock {
+	
 	
 	ArrayList<BuildingBlock> blist;
 	public BuildingBlockImpl(){
@@ -24,9 +26,9 @@ public class BuildingBlockImpl implements BuildingBlock {
     @Override
     public Iterator<BuildingBlock> iterator() {
         // TODO Auto-generated method stub
-        return null;
+    	return null;
     }
-
+    	
     @Override
     public void stackOver(BuildingBlock b) {
         // TODO Auto-generated method stub
