@@ -2,6 +2,7 @@ package sf.codingcomp.blocks.solution;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.function.Consumer;
 
 import sf.codingcomp.blocks.BuildingBlock;
 
@@ -10,26 +11,11 @@ public class BuildingBlockImpl implements BuildingBlock {
     BuildingBlock blockAbove;
     BuildingBlock blockUnder;
 
-    public BuildingBlock getBlockAbove() {
-        return blockAbove;
-    }
-
-    public void setBlockAbove(BuildingBlock blockAbove) {
-        this.blockAbove = blockAbove;
-    }
-
-    public BuildingBlock getBlockUnder() {
-        return blockUnder;
-    }
-
-    public void setBlockUnder(BuildingBlock blockUnder) {
-        this.blockUnder = blockUnder;
-    }
 
     @Override
     public Iterator<BuildingBlock> iterator() {
         // TODO Auto-generated method stub
-        return null;
+        return new stackingBlocks();
     }
 
     @Override
@@ -80,5 +66,29 @@ public class BuildingBlockImpl implements BuildingBlock {
         // TODO Auto-generated method stub
         return blockAbove;
     }
+
+    private class stackingBlocks implements Iterator<BuildingBlock>{
+
+        @Override
+        public boolean hasNext() {
+            return false;
+        }
+
+        @Override
+        public BuildingBlock next() {
+            return null;
+        }
+
+        @Override
+        public void remove() {
+
+        }
+
+        @Override
+        public void forEachRemaining(Consumer<? super BuildingBlock> action) {
+
+        }
+    }
+
 
 }
